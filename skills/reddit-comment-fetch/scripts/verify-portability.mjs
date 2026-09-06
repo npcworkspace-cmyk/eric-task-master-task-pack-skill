@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { lstat, mkdtemp, mkdir, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
+import { lstat, mkdtemp, mkdir, readFile, readdir, realpath, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { packageSkill } from './package-skill.mjs';
@@ -102,8 +102,8 @@ test('PORTABLE DEPLOY: install is verified and replacement keeps a rollback dire
   const explicitBackupRoot = path.join(root, 'permanent backups');
   const second = await deploySkill(secondSource, skillsRoot, { validateRelease: false, backupRoot: explicitBackupRoot });
   assert.ok(second.backup);
-  assert.equal(path.resolve(second.backup).startsWith(`${path.resolve(skillsRoot)}${path.sep}`), false);
-  assert.equal(path.dirname(second.backup), path.resolve(explicitBackupRoot));
+  assert.equal(path.resolve(second.backup).startsWith(`${await realpath(skillsRoot)}${path.sep}`), false);
+  assert.equal(path.dirname(second.backup), await realpath(explicitBackupRoot));
   assert.match(await readFile(path.join(second.installed, 'SKILL.md'), 'utf8'), /two/);
   assert.match(await readFile(path.join(second.backup, 'SKILL.md'), 'utf8'), /one/);
   assert.deepEqual(await readdir(skillsRoot), ['portable-fixture']);

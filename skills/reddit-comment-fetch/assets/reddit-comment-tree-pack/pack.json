@@ -1,6 +1,6 @@
 {
   "name": "reddit-comment-tree-pack",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "entry": "collect.mjs",
   "purpose": "Reddit JSON comment tree collection with serial morechildren width expansion, parent-focused depth expansion, durable recovery, coverage accounting and post-run review",
   "required_runtime_capabilities": {

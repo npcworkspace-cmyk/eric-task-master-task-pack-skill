@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "task-pack-audit",
+  "version": "1.0.0",
+  "platform": "cross-platform",
+  "maturity": "portable-offline-validated",
+  "taskmaster_contract": "not-required-offline-audit",
+  "required_capabilities": ["read-local-files"],
+  "executor_included": true,
+  "no_task_config": true,
+  "no_credentials": true,
+  "no_real_data": true
+}

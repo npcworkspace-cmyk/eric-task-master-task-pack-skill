@@ -2,7 +2,7 @@
 
 独立安装、独立调用、可恢复、只读优先的社媒专项 Codex Skills。每个平台保留自己的导航、分页、去重、断点、覆盖判断、审核和导出方法；浏览器与 Chrome Profile 生命周期统一交给 [Eric Task Master](https://github.com/npcworkspace-cmyk/eric-task-master)。
 
-Independent, auditable Codex Skills for social-platform research and collection. Each Skill is a separate installable package. Eric Task Master remains the external browser runtime.
+Independent, auditable Codex Skills for social-platform research and collection, plus a completion-audit Skill. A release unit may be one Skill or a complete declared bundle. Eric Task Master remains the external browser runtime.
 
 ## 为什么是多个 Skill
 
@@ -15,6 +15,7 @@ Facebook 群组分页和 Reddit 评论树不是同一种数据结构，也没有
 | `facebook-group-posts` | Facebook | 群组贴文只读采集、游标恢复、字段核验、导出、自迭代 | stable |
 | `reddit-comment-fetch` | Reddit | 评论树、`morechildren`、深层补取、覆盖缺口、自迭代 | portable-offline-validated |
 | `tiktok-discovery` 三 Skill 包 | TikTok | 参考深剖、种子发现、逐轮裂变、集中审核、MD/执行器复盘与回滚 | portable-offline-validated |
+| `task-pack-audit` | 通用审计 | Pack 完成后的八原则审计、证据核对、最小修复建议、源码快照 | portable-offline-validated |
 
 TikTok 位于 `bundles/tiktok-discovery`，包含独立调用的 `tiktok-seed-discovery`、`tiktok-seed-expansion` 和 `tiktok-discovery-retrospective`。这三个阶段共享一份运行库，作为一个完整发行包安装，不依赖 Facebook、Reddit 或本仓库工具。
 
@@ -24,7 +25,7 @@ TikTok 位于 `bundles/tiktok-discovery`，包含独立调用的 `tiktok-seed-di
 
 ## 安装
 
-先安装 Eric Task Master。它不包含在本仓库或任何 Skill ZIP 中。
+浏览器采集 Skill 需要先安装 Eric Task Master；它不包含在本仓库或任何 Skill ZIP 中。`task-pack-audit` 可独立审计本地文件，其可选快照工具只依赖 Python 3.11+ 标准库。
 
 克隆仓库后安装一个 Skill：
 
@@ -91,7 +92,17 @@ Task 模块使用 [`taskmaster-task-module-v1`](docs/task-master-contract.md)。
 
 ## 任务后自迭代
 
-任务终态写入 task-local `evolution-review-status.json`。复盘只从带证据的运行记录提取通用改进，候选可以同时修改执行器与 Markdown，但不能复制客户、目标账号、查询词、Profile 或现场统计。候选必须通过旧版和新版回归、测试差异审核、泄漏扫描和独立 ZIP 安装后才能进入正式版本。详见 [自迭代协议](docs/evolution.md)。
+任务结束后，按各平台已有机制记录复盘及处理结果，不强制相同标记文件或状态名。只从运行证据提取通用改进，按需要修改执行器或 Markdown，保留回退，验证相关行为并审核测试差异。具体目标和现场结果不进入通用版本。详见 [自迭代原则](docs/evolution.md)。
+
+## Pack 完成后的审计
+
+新建、改版或自迭代候选完成后，交付或发布前使用独立的 [task-pack-audit](skills/task-pack-audit/SKILL.md)。仓库 [AGENTS.md](AGENTS.md) 和贡献流程已接入此收尾步骤，完整规范维护在[八条原则](skills/task-pack-audit/references/principles.md)。
+
+```bash
+python tools/skillkit.py install --skill task-pack-audit
+```
+
+对话中可以说：“用 `$task-pack-audit` 审计刚完成的 Pack Skill”。审计会检查实际实现和证据，区分已确认问题、待验证项及合理差异；不会仅凭文件齐全或测试绿灯判定全部符合。快照工具只确认被审文件有没有变化，不输出语义通过结论。跨系统 CI 运行其工具测试和隔离安装验证；Agent 的审计结论留在任务或 PR 中。
 
 ## 兼容性与证据
 

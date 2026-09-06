@@ -2,7 +2,7 @@
 name: reddit-comment-fetch
 description: 使用 Eric Task Master 获取已确定 Reddit 帖子的当前可访问评论，或在不同设备、操作系统和 Task Master 版本间部署、适配、复盘与改进评论采集 Pack。采用 JSON 评论树、morechildren 和父评论聚焦子树，不负责找帖或 VOC 分析。
 metadata:
-  version: "3.0.0"
+  version: "3.0.1"
 ---
 
 # Reddit 评论获取
