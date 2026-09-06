@@ -1,102 +1,108 @@
-# Eric Task Master Task Pack Skills
+# Eric Task Master Skills
 
-独立安装、独立调用、可恢复、只读优先的社媒专项 Codex Skills。每个平台保留自己的导航、分页、去重、断点、覆盖判断、审核和导出方法；浏览器与 Chrome Profile 生命周期统一交给 [Eric Task Master](https://github.com/npcworkspace-cmyk/eric-task-master)。
+**Turn work you know how to do into work your AI agent can repeat at scale.**
 
-Independent, auditable Codex Skills for social-platform research and collection. Each Skill is a separate installable package. Eric Task Master remains the external browser runtime.
+English | [简体中文](README.zh-CN.md)
 
-## 为什么是多个 Skill
+Find creators. Collect community discussions. Gather evidence for research. Give your agent a goal and a reusable Skill, then let [Eric Task Master](https://github.com/npcworkspace-cmyk/eric-task-master) run the browser work in batches while results are saved along the way.
 
-Facebook 群组分页和 Reddit 评论树不是同一种数据结构，也没有同一套恢复语义。本仓库共享发布工具和 Task Master 能力契约，但不把平台判断塞进一个总控 Skill，也不要求安装一个平台才能使用另一个平台。
+This is the community Skill library for Task Master. A Skill contains **instructions the agent can follow, scripts that do the repetitive work, and checks that tell you what actually finished**. You can use an existing Skill, improve one, or publish your own.
 
-## 当前目录
+Our goal is to make large-scale automation practical for individuals: one person should be able to organize work that would otherwise take hours of repeated clicking, and share that capability so the next person starts further ahead.
 
-| Skill | 平台 | 能力 | 状态 |
+[Start using a Skill](#start-here) · [Agent quick start](docs/agent-quickstart.md) · [Contribute a Skill](CONTRIBUTING.md) · [Download Skills](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/releases/latest) · [Get Task Master](https://github.com/npcworkspace-cmyk/eric-task-master)
+
+## What can I use today?
+
+| I want to… | Give the agent… | Get back… | Skill |
 | --- | --- | --- | --- |
-| `facebook-group-posts` | Facebook | 群组贴文只读采集、游标恢复、字段核验、导出、自迭代 | stable |
-| `reddit-comment-fetch` | Reddit | 评论树、`morechildren`、深层补取、覆盖缺口、自迭代 | portable-offline-validated |
-| `tiktok-discovery` 三 Skill 包 | TikTok | 参考深剖、种子发现、逐轮裂变、集中审核、MD/执行器复盘与回滚 | portable-offline-validated |
+| Collect Facebook group posts | Group links, a time range, and a collection budget | Posts, source links, field checks, JSON/CSV and optional XLSX, plus coverage gaps | [Facebook group posts](skills/facebook-group-posts/SKILL.md) |
+| Read comments across known Reddit posts | Post links and a reading budget | Comments with reply relationships, saved progress, and a report of missing or inaccessible branches | [Reddit comments](skills/reddit-comment-fetch/SKILL.md) |
+| Find and expand a TikTok creator shortlist | Target countries, follower range, 3–5 labeled references, creator category and style | Reference research, deduplicated candidates, screening evidence, and seeds for another expansion round | [TikTok discovery](bundles/tiktok-discovery/START-HERE.md) |
 
-TikTok 位于 `bundles/tiktok-discovery`，包含独立调用的 `tiktok-seed-discovery`、`tiktok-seed-expansion` 和 `tiktok-discovery-retrospective`。这三个阶段共享一份运行库，作为一个完整发行包安装，不依赖 Facebook、Reddit 或本仓库工具。
+TikTok comes as three Skills in one ZIP: **research and find seeds → expand from reviewed seeds → review the run and improve the method**. Install them together; you can call each stage separately.
 
-`stable` 表示已有完整执行器和发布验证；`portable-offline-validated` 表示通用核心、打包和跨目录安装已经通过离线验证，真实平台适配仍需在有权使用的本地 Profile 中核验。
+These are the currently published workflows. Ideas such as product research, supplier discovery, media monitoring, and website QA are welcome contributions, not capabilities already included in this library.
 
-其他平台在各自完成清理、独立安装和发布验证后再进入目录；未列出的本地开发 Skill 不会被本仓库首发打包。
+## Start here
 
-## 安装
+### 1. Give your agent the project link and your task
 
-先安装 Eric Task Master。它不包含在本仓库或任何 Skill ZIP 中。
-
-克隆仓库后安装一个 Skill：
-
-```bash
-python tools/skillkit.py install --skill facebook-group-posts
-```
-
-安装到指定 Skills 目录：
-
-```bash
-python tools/skillkit.py install --skill reddit-comment-fetch --skills-dir /path/to/skills
-```
-
-也可以从 GitHub Release 下载某个独立 ZIP，验证后安装：
-
-```bash
-python tools/skillkit.py verify --archive path/to/skill.zip
-python tools/skillkit.py install --archive path/to/skill.zip
-```
-
-目录发现顺序是显式 `--skills-dir`、`SOCIAL_SKILLS_DIR`、`CODEX_HOME/skills`、`~/.codex/skills`。
-
-TikTok 使用随包的 Node 安装器。下载并解压三 Skill ZIP 后：
+Copy this message into an agent that can read local files and run terminal commands:
 
 ```text
-node install.mjs --dry-run
-node install.mjs
-node install.mjs --skills-dir /path/to/agent/skills
+Use the Skills in https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill
+to help me complete this task: [describe the result I need].
+
+Read README.md and docs/agent-quickstart.md. Choose and install the matching
+published Skill. If Task Master or another dependency is missing, help me
+set it up from its official release. Read the installed SKILL.md before running.
+
+My inputs and limits: [links, scope, budget, and any chosen Chrome Profile].
+Ask only for missing information. Start with a small batch, check its output,
+then continue within my authorized scope. Give me the result files, what is
+still missing, and the next useful step. Review the run before closing it.
 ```
 
-该安装器默认使用 `CODEX_HOME/skills` 或 `~/.codex/skills`，保留旧版备份并校验整包哈希。Node.js 22+ 是离线程序依赖；Task Master 和 Chrome 由当前机器提供。开始方式见 [TikTok START-HERE](bundles/tiktok-discovery/START-HERE.md)。
+For TikTok, label each reference as **competitor**, **brand partner**, or **style reference**. Add the target countries, follower range, and the kind of creator/content you want. The agent uses those references to build its search plan.
 
-## 校验与打包
+### 2. Set up your browser session
 
-```bash
-python tools/skillkit.py validate --all --strict
-python tools/skillkit.py test --all
-python -m unittest discover -s tests -p "test_*.py"
-python tools/skillkit.py package --all --output dist
-python tools/tiktok_bundle.py validate
-python tools/tiktok_bundle.py package --output dist
-```
+Install [Task Master](https://github.com/npcworkspace-cmyk/eric-task-master#install) and stable Google Chrome. In the Task Master Dashboard, choose a browser **Profile**—a separate saved browser session—and sign in where needed. Close its manual browser window before the automated task starts.
 
-打包器生成每个 Skill 的确定性 ZIP、`SHA256SUMS` 和机器可读 `release-index.json`。验证器拒绝绝对设备路径、明显凭据、真实任务配置、非规范归档成员、路径穿越、符号链接、文件名冲突和清单漂移。
+Task Master runs locally. Your agent needs access to that computer's files and terminal. Codex has a default Skill installation path; other agents can use their own Skill directory or read the installed `SKILL.md` directly. See the [installation commands and agent handoff](docs/agent-quickstart.md).
 
-TikTok 工具复用同一泄漏扫描和归档路径检查，并将完整包加入同一索引/校验清单。其 ZIP 使用原生 `manifest.json` 与 `node install.mjs`，不交给单 Skill 安装器拆分。CI 在三个操作系统上运行离线回归、ZIP 解包安装、安装后重建；不访问 TikTok 或其他社媒账户。部署步骤和验证边界见 [发布流程](docs/release-process.md)。
+### 3. Check a small result, then expand
 
-## 任务配置边界
+The agent should show you the task's Dashboard link and save useful results as it works. Start with a small batch to check the current website and your criteria. Then increase the batch budget or run another discovery round.
 
-群组、帖子、账号或搜索链接，日期和数量范围，Chrome Profile，页面或动作预算，检查点和输出目录属于每次任务。它们保存在任务工作目录，不进入 Skill、提交、CI fixture 或 release ZIP。
+Speed depends on the website, your session, and how much checking the task needs. A thousand discovered accounts are not automatically a thousand qualified partners. Every delivery should say what was collected, what passed review, and what remains unknown.
 
-所有发布内容使用合成 fixture。页面可见不代表允许商业复用；跳过和未启动不等于零；Task Master Worker 结束也不等于业务覆盖完整。
+## For agents: install, run, verify
 
-## Task Master 与 Skill 的职责
+Start with [docs/agent-quickstart.md](docs/agent-quickstart.md). It gives you:
 
-| Eric Task Master | 专项 Skill |
-| --- | --- |
-| Chrome 与 Profile 生命周期 | 平台页面和响应语义 |
-| 一个 Profile 一个写入者 | 分页、去重和业务断点 |
-| task ID、状态、等待、停止和恢复 | 字段、证据、覆盖和缺失原因 |
-| output directory 与进度通道 | 审核、导出和业务完成判断 |
+1. The correct installer for a single Skill versus the TikTok three-Skill bundle.
+2. The input requirements and execution entry for each workflow.
+3. The Task Master commands for starting once, following progress, and preserving output.
+4. The checks to perform before calling the business task complete.
 
-Task 模块使用 [`taskmaster-task-module-v1`](docs/task-master-contract.md)。验证页面、限流或访问拒绝进入等待或保守停止，不实现绕过。
+Keep each task's links, credentials, Profile selection, budget, and output outside the reusable Skill. Use the user's chosen Profile. On login, verification, or access limits, preserve progress and hand control back through Task Master.
 
-## 任务后自迭代
+## Share a Skill. Make the next person's work easier.
 
-任务终态写入 task-local `evolution-review-status.json`。复盘只从带证据的运行记录提取通用改进，候选可以同时修改执行器与 Markdown，但不能复制客户、目标账号、查询词、Profile 或现场统计。候选必须通过旧版和新版回归、测试差异审核、泄漏扫描和独立 ZIP 安装后才能进入正式版本。详见 [自迭代协议](docs/evolution.md)。
+Have you taught an agent to do a useful piece of work reliably? **We want that Skill here.** It can solve one narrow problem well. You do not need to build another automation platform.
 
-## 兼容性与证据
+- **Have an idea?** [Describe the workflow](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/issues/new?template=skill-proposal.md): what you provide, what should happen, and what a good result looks like.
+- **Have a working script?** [Package it as a Skill](CONTRIBUTING.md): add instructions, input/output examples, and a way to check the result.
+- **Found something broken or confusing?** [Open an issue](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/issues/new) with a sanitized example. Fixes, translations, and clearer docs are useful contributions too.
+- **Ready to share?** Fork the repository, open a pull request, and include your test evidence. After review and merge, a maintainer can publish it through the [release pipeline](docs/release-process.md).
 
-公共 CI 在 Windows、macOS 和 Linux 上运行离线测试，不登录任何社媒账号。真实 Chrome 或真实平台验证只在维护者有权使用的本地 Profile 中有界执行，并在发布记录中与静态、离线证据分开标注。未实测的平台或版本写 `not_tested`，不会写成已兼容。
+AI agents can help write the docs, extract reusable code, add tests, and prepare a PR. Contributors remain responsible for checking what they submit. Remove client data, account details, and machine-specific settings before sharing.
+
+As more people contribute, the library can cover more kinds of work. A fix discovered in one person's project can become a tested improvement everyone can use. **Use a Skill, improve it through real work, and contribute the useful part back.** That is how we want to grow this automation ecosystem.
+
+## Improve with each run
+
+The included Skills ask the agent to review successes, failures, wasted work, and missing evidence after a run. Useful improvements can update both instructions and scripts in an isolated candidate, pass validation, and become a new version with a rollback path.
+
+A review can also conclude that no change is needed. A website error or a single unusual account should not silently rewrite everyone's workflow. See [how iteration works](docs/evolution.md).
+
+## What has been tested?
+
+Public CI runs offline tests and packaging checks on **Windows, macOS, and Linux**. The TikTok bundle also checks ZIP installation and rebuilding from the installed copy. CI does not log into social accounts, and passing it does not prove that every website or account is currently accessible.
+
+Published ZIPs include integrity metadata; each release includes `SHA256SUMS` and `release-index.json`. [View the CI](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/actions/workflows/ci.yml) or read the [release and verification process](docs/release-process.md).
 
 ## License
 
-[MIT](LICENSE). 平台名称和商标归各自权利人所有，详情见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+[MIT](LICENSE). See [third-party notices](THIRD_PARTY_NOTICES.md) for platform names and trademarks.
+
+---
+
+**The two projects work together:**
+
+- [Eric Task Master — install the local browser task runner](https://github.com/npcworkspace-cmyk/eric-task-master)
+- [Task Master Skills — find, build, and share reusable workflows](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill)
+
+Task Master keeps the browser work running. Skills teach your agent how to get a useful result.
