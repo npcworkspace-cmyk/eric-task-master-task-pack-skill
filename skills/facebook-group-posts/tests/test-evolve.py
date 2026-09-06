@@ -218,7 +218,7 @@ class EvolutionTests(unittest.TestCase):
         self.assertEqual(result['phase'], 'promoted')
         self.assertEqual(result['version'], '1.0.1')
         self.assertFalse(result['browser_task_restarted'])
-        self.assertTrue(Path(result['backup']).is_relative_to(self.fixture.workspace))
+        self.assertTrue(Path(result['backup']).resolve().is_relative_to(self.fixture.workspace.resolve()))
         self.assertEqual(evolve.inventory(self.fixture.source), evolve.inventory(candidate))
         evolve.rollback(self.fixture.workspace, candidate)
         self.assertEqual(evolve.inventory(self.fixture.source), before)

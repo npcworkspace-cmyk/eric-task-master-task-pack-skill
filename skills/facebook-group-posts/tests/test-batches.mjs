@@ -17,6 +17,7 @@ async function fixture() {
   const workspace = path.join(fixtureRoot, `fixture-${++fixtureIndex}`); await fs.mkdir(workspace);
   const launcher = path.join(workspace, 'fake-cli.mjs'), modulePath = path.join(workspace, 'fake-collector.mjs');
   await fs.writeFile(launcher, '// synthetic CLI; never executed\n'); await fs.writeFile(modulePath, '// synthetic collector; never executed\n');
+  if (process.platform !== 'win32') await fs.chmod(launcher, 0o755);
   const config = validateConfig({ schemaVersion: 1, groupUrl: 'https://www.facebook.com/groups/synthetic.group/', startTime: '2025-02-01T00:00:00-05:00', endTime: '2025-03-01T13:04:00-05:00', workspace, launcher, modulePath, maxPages: 2, boundaryPages: 5, paceMs: 500, pollMs: 1, managerUrl: 'http://127.0.0.1:19946', profile: '测试 Profile & "literal" %PATH%' });
   const configPath = path.join(workspace, 'config.json'); await atomicJson(configPath, config);
   return { config, configPath };
@@ -172,6 +173,7 @@ test('Task Master launcher resolves from explicit environment and PATH without a
   const folder = path.join(fixtureRoot, `launcher-${++fixtureIndex}`); await fs.mkdir(folder);
   const filename = process.platform === 'win32' ? 'taskmaster.cmd' : 'taskmaster';
   const launcher = path.join(folder, filename); await fs.writeFile(launcher, 'synthetic launcher\n');
+  if (process.platform !== 'win32') await fs.chmod(launcher, 0o755);
   assert.equal(await resolveLauncher(undefined, process.platform, { ERIC_TASK_MASTER_CLI: launcher, PATH: '' }), path.resolve(launcher));
   assert.equal(await resolveLauncher(undefined, process.platform, { PATH: folder }), path.resolve(launcher));
   await assert.rejects(resolveLauncher(undefined, process.platform, { PATH: path.join(folder, 'missing') }), /INSTALLED_LAUNCHER_NOT_FOUND/);

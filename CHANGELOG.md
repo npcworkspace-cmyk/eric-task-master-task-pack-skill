@@ -9,3 +9,5 @@
   installation, release scanning, and SHA-256 manifests.
 - Define the Task Master capability boundary and task-local self-evolution
   protocol.
+- Make Facebook synthetic fixtures portable across POSIX executable bits,
+  canonical temporary paths, and case-insensitive macOS volumes.

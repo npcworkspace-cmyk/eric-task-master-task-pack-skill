@@ -98,9 +98,12 @@ class PortableTests(unittest.TestCase):
             lower = self.fixture.root / 'scripts' / 'case.py'
             upper.write_text('upper', encoding='utf-8')
             lower.write_text('lower', encoding='utf-8')
-            with self.assertRaisesRegex(ValueError, 'CASE_OR_UNICODE_PATH_COLLISION'):
-                portable.inventory(self.fixture.root)
-            upper.unlink(); lower.unlink()
+            names = {entry.name for entry in upper.parent.iterdir()}
+            if {'Case.py', 'case.py'}.issubset(names):
+                with self.assertRaisesRegex(ValueError, 'CASE_OR_UNICODE_PATH_COLLISION'):
+                    portable.inventory(self.fixture.root)
+            for target in {upper.resolve(), lower.resolve()}:
+                target.unlink(missing_ok=True)
         reserved = self.fixture.root / 'scripts' / 'con.py'
         reserved.write_text('reserved', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'WINDOWS_RESERVED_SKILL_PATH'):
