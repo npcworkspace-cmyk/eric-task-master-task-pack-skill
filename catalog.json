@@ -39,7 +39,7 @@
     {
       "name": "reddit-comment-fetch",
       "path": "skills/reddit-comment-fetch",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "platform": "reddit",
       "maturity": "portable-offline-validated",
       "taskmaster_contract": {

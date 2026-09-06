@@ -11,8 +11,11 @@
   protection and standalone use in the three-system CI matrix.
 - Connect Reddit's five existing offline suites to CI in addition to its
   release-record validator, so behavior tests actually rerun on each system.
-- Keep platform payload versions unchanged and distinguish automated checks
-  from Agent review and live platform evidence.
+- Release Reddit v3.0.1: reject review destinations that overlap source evidence
+  through filesystem aliases, and make relative-path/backup tests exercise the
+  same invariants on runner aliases and separate Windows drives.
+- Preserve Facebook and TikTok payloads, and distinguish automated checks from
+  Agent review and live platform evidence.
 
 ## 0.2.0 - 2026-09-06
 
