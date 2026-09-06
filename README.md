@@ -14,6 +14,9 @@ Facebook 群组分页和 Reddit 评论树不是同一种数据结构，也没有
 | --- | --- | --- | --- |
 | `facebook-group-posts` | Facebook | 群组贴文只读采集、游标恢复、字段核验、导出、自迭代 | stable |
 | `reddit-comment-fetch` | Reddit | 评论树、`morechildren`、深层补取、覆盖缺口、自迭代 | portable-offline-validated |
+| `tiktok-discovery` 三 Skill 包 | TikTok | 参考深剖、种子发现、逐轮裂变、集中审核、MD/执行器复盘与回滚 | portable-offline-validated |
+
+TikTok 位于 `bundles/tiktok-discovery`，包含独立调用的 `tiktok-seed-discovery`、`tiktok-seed-expansion` 和 `tiktok-discovery-retrospective`。这三个阶段共享一份运行库，作为一个完整发行包安装，不依赖 Facebook、Reddit 或本仓库工具。
 
 `stable` 表示已有完整执行器和发布验证；`portable-offline-validated` 表示通用核心、打包和跨目录安装已经通过离线验证，真实平台适配仍需在有权使用的本地 Profile 中核验。
 
@@ -44,6 +47,16 @@ python tools/skillkit.py install --archive path/to/skill.zip
 
 目录发现顺序是显式 `--skills-dir`、`SOCIAL_SKILLS_DIR`、`CODEX_HOME/skills`、`~/.codex/skills`。
 
+TikTok 使用随包的 Node 安装器。下载并解压三 Skill ZIP 后：
+
+```text
+node install.mjs --dry-run
+node install.mjs
+node install.mjs --skills-dir /path/to/agent/skills
+```
+
+该安装器默认使用 `CODEX_HOME/skills` 或 `~/.codex/skills`，保留旧版备份并校验整包哈希。Node.js 22+ 是离线程序依赖；Task Master 和 Chrome 由当前机器提供。开始方式见 [TikTok START-HERE](bundles/tiktok-discovery/START-HERE.md)。
+
 ## 校验与打包
 
 ```bash
@@ -51,9 +64,13 @@ python tools/skillkit.py validate --all --strict
 python tools/skillkit.py test --all
 python -m unittest discover -s tests -p "test_*.py"
 python tools/skillkit.py package --all --output dist
+python tools/tiktok_bundle.py validate
+python tools/tiktok_bundle.py package --output dist
 ```
 
 打包器生成每个 Skill 的确定性 ZIP、`SHA256SUMS` 和机器可读 `release-index.json`。验证器拒绝绝对设备路径、明显凭据、真实任务配置、非规范归档成员、路径穿越、符号链接、文件名冲突和清单漂移。
+
+TikTok 工具复用同一泄漏扫描和归档路径检查，并将完整包加入同一索引/校验清单。其 ZIP 使用原生 `manifest.json` 与 `node install.mjs`，不交给单 Skill 安装器拆分。CI 在三个操作系统上运行离线回归、ZIP 解包安装、安装后重建；不访问 TikTok 或其他社媒账户。部署步骤和验证边界见 [发布流程](docs/release-process.md)。
 
 ## 任务配置边界
 

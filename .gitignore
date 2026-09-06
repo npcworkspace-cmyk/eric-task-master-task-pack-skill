@@ -20,3 +20,6 @@ checkpoint*.json
 observations*.jsonl
 raw/
 outputs/
+bundles/tiktok-discovery/baseline.json
+bundles/tiktok-discovery/QA.json
+bundles/tiktok-discovery/manifest.json

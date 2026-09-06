@@ -1,0 +1,4 @@
+interface:
+  display_name: "TikTok 复盘与自迭代"
+  short_description: "每轮复盘 MD、执行器与入口策略，验证通用改进并提供跨设备安装和回滚"
+  default_prompt: "使用 $tiktok-discovery-retrospective 复盘当前任务，分别检查 MD、执行器与策略，记录证据；有改进则建立隔离副本、验证和发布版本，保留回滚，无改进则说明保留原版的理由。"
