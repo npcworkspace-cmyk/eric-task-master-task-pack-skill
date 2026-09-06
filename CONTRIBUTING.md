@@ -23,11 +23,20 @@ source repository have been removed.
 8. For TikTok run `python tools/tiktok_bundle.py validate`, then
    `python tools/tiktok_bundle.py package --output dist`. Review the full
    three-Skill unit and its native installation/rollback contract.
+9. Before delivery or publication, apply [Task Pack Audit](skills/task-pack-audit/SKILL.md)
+   to the completed release unit and relevant changes. Report concrete findings,
+   supporting evidence, minimal fixes and untested scope in the task or PR.
+   Recheck affected conclusions after fixes. Keep private audit artifacts outside
+   release payloads; a green CI run does not replace this semantic review.
 
 Changes to tests require review of the test diff as well as a passing run.
 Removing an assertion to make a candidate pass is not an acceptable fix.
 
 ## Skill rules
+
+Use the [eight authoring and iteration principles](skills/task-pack-audit/references/principles.md)
+as the maintained guideline. The items below describe repository packaging
+conventions; they do not prescribe platform algorithms or runtime schemas.
 
 - Keep the frontmatter `name` equal to the folder name.
 - Keep the description precise enough for correct routing.

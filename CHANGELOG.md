@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0 - 2026-09-07
+
+- Add independently installable `task-pack-audit` v1.0.0 with eight concise
+  authoring/iteration principles and evidence-based completion review.
+- Apply the audit after Pack creation or revision through repository Agent,
+  contribution and release instructions, preserving platform and bundle choices.
+- Include a standard-library source snapshot helper that detects file drift
+  without claiming semantic approval; test relocation, existing evidence
+  protection and standalone use in the three-system CI matrix.
+- Connect Reddit's five existing offline suites to CI in addition to its
+  release-record validator, so behavior tests actually rerun on each system.
+- Keep platform payload versions unchanged and distinguish automated checks
+  from Agent review and live platform evidence.
+
 ## 0.2.0 - 2026-09-06
 
 - Add the complete TikTok three-stage Skill bundle v2.1.1: reference research,

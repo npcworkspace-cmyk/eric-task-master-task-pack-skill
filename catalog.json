@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "eric-task-master-task-pack-skill",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "repository": "https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill",
   "license": "MIT",
   "taskmaster": {
@@ -60,6 +60,25 @@
       "tests": [
         {
           "argv": ["node", "scripts/validate-release.mjs", "{skill}"],
+          "cwd": "{skill}"
+        },
+        { "argv": ["node", "scripts/verify-pack.mjs"], "cwd": "{skill}" },
+        { "argv": ["node", "scripts/verify-paused.mjs"], "cwd": "{skill}" },
+        { "argv": ["node", "scripts/verify-review.mjs"], "cwd": "{skill}" },
+        { "argv": ["node", "scripts/verify-release.mjs"], "cwd": "{skill}" },
+        { "argv": ["node", "scripts/verify-portability.mjs"], "cwd": "{skill}" }
+      ]
+    },
+    {
+      "name": "task-pack-audit",
+      "path": "skills/task-pack-audit",
+      "version": "1.0.0",
+      "platform": "cross-platform",
+      "maturity": "portable-offline-validated",
+      "taskmaster_contract": "not-required-offline-audit",
+      "tests": [
+        {
+          "argv": ["{python}", "-B", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py", "-v"],
           "cwd": "{skill}"
         }
       ]
