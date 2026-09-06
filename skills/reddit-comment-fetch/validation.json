@@ -1,0 +1,215 @@
+{
+  "schema": 1,
+  "bundleVersion": "3.0.0",
+  "releaseStatus": "passed",
+  "scope": "Portable Skill and Pack release validation only; no task, account, Profile, post, comment or business-run evidence is stored here.",
+  "checks": {
+    "coreBehavior": {
+      "status": "passed",
+      "tests": 34,
+      "pass": 34,
+      "fail": 0
+    },
+    "pausedFinalization": {
+      "status": "passed",
+      "tests": 7,
+      "pass": 7,
+      "fail": 0
+    },
+    "postRunReview": {
+      "status": "passed",
+      "tests": 13,
+      "pass": 13,
+      "fail": 0
+    },
+    "releaseCleanliness": {
+      "status": "passed",
+      "tests": 19,
+      "pass": 19,
+      "fail": 0
+    },
+    "portablePackageAndDeploy": {
+      "status": "passed",
+      "tests": 8,
+      "pass": 8,
+      "fail": 0
+    },
+    "packageRoundTrip": {
+      "status": "passed_by_portability_suite",
+      "exactArchiveReceipt": "external sidecar"
+    },
+    "installRoundTrip": {
+      "status": "passed_by_portability_suite",
+      "exactInstallReceipt": "deployment result"
+    }
+  },
+  "sourceBasis": {
+    "comments": "https://www.reddit.com/dev/api/#GET_comments_{article}",
+    "morechildren": "https://www.reddit.com/dev/api/#GET_api_morechildren",
+    "note": "Official endpoint semantics only; live access is not inferred."
+  },
+  "portability": {
+    "design": "Node ESM and built-in modules; path-safe runtime inputs; no shell, launcher path or operating-system command dependency in the collector.",
+    "matrix": {
+      "windows": {
+        "status": "tested",
+        "node": "22.22.3"
+      },
+      "linux": {
+        "status": "not_tested",
+        "node": null
+      },
+      "macos": {
+        "status": "not_tested",
+        "node": null
+      }
+    },
+    "claim": "A platform is marked tested only when this exact release is executed there; platform-neutral design is not reported as live validation."
+  },
+  "artifacts": {
+    "collectorSha256": "3c3cb13956a5bb9add90d32e43aa2d5a46e0fc63c7e75255522241f67e438b1c",
+    "filesExcludingValidation": [
+      {
+        "path": "LICENSE",
+        "bytes": 1111,
+        "sha256": "0e17dec274f9689cdb5a14961dcf3a2156be2ff0ee44809fd5c88bc42c897be8"
+      },
+      {
+        "path": "SKILL.md",
+        "bytes": 5510,
+        "sha256": "f53db452b98760a1bbd8470041424caa387bf46bbb7490bad0e7cb739138ef25"
+      },
+      {
+        "path": "THIRD_PARTY_NOTICES.md",
+        "bytes": 853,
+        "sha256": "aedda30d09c60e1624c038505432b566788e5d5cac9085b23c121abc94e7b7d3"
+      },
+      {
+        "path": "agents/openai.yaml",
+        "bytes": 459,
+        "sha256": "cf625e095ac9f56a328cf631b795527a9944144af07898020c8e038503c7ef02"
+      },
+      {
+        "path": "assets/reddit-comment-tree-pack/collect.mjs",
+        "bytes": 48485,
+        "sha256": "3c3cb13956a5bb9add90d32e43aa2d5a46e0fc63c7e75255522241f67e438b1c"
+      },
+      {
+        "path": "assets/reddit-comment-tree-pack/input.example.json",
+        "bytes": 40,
+        "sha256": "43558af2d224bb60286920c61809ece8bb00cf5caf6faa9e53d032ec50839264"
+      },
+      {
+        "path": "assets/reddit-comment-tree-pack/pack.json",
+        "bytes": 4086,
+        "sha256": "fc69ef1529fd7fedb192ce3464958c1ea0461ed3221f9dc72c9ee33cd30b749f"
+      },
+      {
+        "path": "references/data-contract.md",
+        "bytes": 5870,
+        "sha256": "0c85d032b0a4e31634d4ea06fb8ffbc4f568e7851c6a19e2ab099d52b2ca7f36"
+      },
+      {
+        "path": "references/method-and-pitfalls.md",
+        "bytes": 5691,
+        "sha256": "c824ca6f55d832fd9df758604687df8744c5b53742c9763989999d23e3710d9c"
+      },
+      {
+        "path": "references/runtime-adaptation.md",
+        "bytes": 4494,
+        "sha256": "fabe7dca06a588d286c36533a311f6046bc06a018721068e9134d4e462dd783b"
+      },
+      {
+        "path": "references/self-iteration.md",
+        "bytes": 4294,
+        "sha256": "e3f983a04db31b36a1f2eef73fd74623e29c784ddaa8cad970bc05bf64adb810"
+      },
+      {
+        "path": "references/skill-pack-standard.md",
+        "bytes": 4749,
+        "sha256": "aea18c0efa636d5cf33a6941ce5a8fd49ca6e0aabcbc8a450553eebae2112b63"
+      },
+      {
+        "path": "schemas/iteration-proposal.schema.json",
+        "bytes": 1572,
+        "sha256": "82c3b5f7441f626fca81b530639248b1b8b5f6d0db6e6b0fd703e00e0f4f3305"
+      },
+      {
+        "path": "schemas/run-review.schema.json",
+        "bytes": 5896,
+        "sha256": "99178d6ded7ab3bbe8f5e34f3b773c80e8ef7374c10ffba45a8ee35a5d81d2fe"
+      },
+      {
+        "path": "scripts/deploy-skill.mjs",
+        "bytes": 7027,
+        "sha256": "82beda21ae0527eae7217d6bc098837bdb79bcdc6277e3552de7021e1f9c0fc2"
+      },
+      {
+        "path": "scripts/finalize-paused.mjs",
+        "bytes": 16195,
+        "sha256": "87be1880a2090eac77991f4bbb9b9081993ff40fc7c282c529cb7aaa8e0644e1"
+      },
+      {
+        "path": "scripts/fixtures/legacy-schema1-collector.fixture.mjs",
+        "bytes": 27684,
+        "sha256": "8a32cf9ac96abf8776af9781452b2e18f9c78a692e1d13268a18283bd50449fb"
+      },
+      {
+        "path": "scripts/package-skill.mjs",
+        "bytes": 8216,
+        "sha256": "f84e6e32da9275fe356663d1270d0d459ac7ba7f67ca794d9e9b9c1760fa330a"
+      },
+      {
+        "path": "scripts/release-skill.mjs",
+        "bytes": 12233,
+        "sha256": "23bcb9f1c9c74f2e781235ecbf266f280b152e8bbb62fc6eb7911ca0c42dd77d"
+      },
+      {
+        "path": "scripts/review-run.mjs",
+        "bytes": 21883,
+        "sha256": "1ea7d240e6995fae202d5441b78a9f07b527a33b4800b8af89e66f8735a7468d"
+      },
+      {
+        "path": "scripts/validate-release.mjs",
+        "bytes": 17786,
+        "sha256": "c6afb722bb7604537245a86838547231c8a9044b814cf158c797ddf55a252e61"
+      },
+      {
+        "path": "scripts/verify-pack.mjs",
+        "bytes": 45086,
+        "sha256": "7f16f041ccd783dc7bb91e239d8ec280a9ceae823bbe4c5a31b6270c83fac1db"
+      },
+      {
+        "path": "scripts/verify-paused.mjs",
+        "bytes": 12556,
+        "sha256": "1021f1298479051565784524919bc4a83d5b7c8e0ba252af48d9d49be456659f"
+      },
+      {
+        "path": "scripts/verify-portability.mjs",
+        "bytes": 7637,
+        "sha256": "cab02a0a9ef7ee7b758bb9fbee725a0ca67babc7c430063119f97ca80518b473"
+      },
+      {
+        "path": "scripts/verify-release.mjs",
+        "bytes": 15453,
+        "sha256": "d9ad0c4e2f68492300bbc5919a2d0f2cb81999809eef459c17ed43ad92e2c250"
+      },
+      {
+        "path": "scripts/verify-review.mjs",
+        "bytes": 18662,
+        "sha256": "c7c39dd900ff406d9ca061314866d8a9e1e07b48fe1111de65bd9e44ac78ae57"
+      },
+      {
+        "path": "skill-release.json",
+        "bytes": 706,
+        "sha256": "59834e6478dd9582b2343d4189f2b0b02f941a8f78f32d1bec5693980e941210"
+      }
+    ]
+  },
+  "limits": [
+    "Target Task Master capabilities must be checked on each device.",
+    "Offline tests do not prove Reddit access or live response stability.",
+    "No fixed throughput, platform quota or historical absolute completeness is promised.",
+    "State schema and method revision must both pass explicit compatibility checks before resume."
+  ]
+}

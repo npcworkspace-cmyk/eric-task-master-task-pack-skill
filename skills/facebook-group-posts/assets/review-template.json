@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reviewed_at": null,
+  "reviewer": null,
+  "review_mode": "not_reviewed",
+  "source_directory": null,
+  "scope": {"group_url": null, "group_id": null, "start": null, "end": null, "timezone": null},
+  "automatic_audit_file": null,
+  "data_validity": "not_reviewed",
+  "coverage": "not_reviewed",
+  "classification_review": "not_reviewed",
+  "decision": "not_reviewed",
+  "sample_checks": [],
+  "unresolved_findings": [],
+  "accepted_limitations": [],
+  "evidence_files": [],
+  "notes": "每项sample_checks记录post_id或page、检查项、观察、证据和结论。没有页面核查时写offline，不声称live。填写后的文件属于任务产物，不回写此模板。"
+}

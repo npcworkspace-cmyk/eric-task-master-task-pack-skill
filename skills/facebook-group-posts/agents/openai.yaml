@@ -1,0 +1,4 @@
+interface:
+  display_name: "FB群组帖子采集"
+  short_description: "可跨设备部署的FB群组采集执行器，支持断点、核验和任务后自迭代"
+  default_prompt: "使用 $facebook-group-posts 按本次外部任务配置执行 Facebook 群组采集与核验；收尾时闭环复盘标记，只把经验证的通用执行器和 Markdown 改进纳入 Skill。"

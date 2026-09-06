@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    tags-ignore:
+      - "v*"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }} / Node 22
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.11"]
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Install test-only Python dependency
+        run: python -m pip install --disable-pip-version-check openpyxl
+      - name: Validate release trees
+        run: python tools/skillkit.py validate --all --strict
+      - name: Run Skill behavior tests
+        run: python tools/skillkit.py test --all
+      - name: Run repository tool tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+
+  package:
+    name: Build deterministic release assets
+    needs: validate
+    runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Build and verify every independent Skill ZIP
+        run: python tools/skillkit.py package --all --output dist
+      - uses: actions/upload-artifact@v7
+        with:
+          name: skill-release-assets
+          path: dist/
+          if-no-files-found: error

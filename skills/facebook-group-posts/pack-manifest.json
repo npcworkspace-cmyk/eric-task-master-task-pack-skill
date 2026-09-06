@@ -1,0 +1,155 @@
+{
+  "name": "facebook-group-posts",
+  "display_name": "FB群组帖子采集",
+  "version": "1.2.1",
+  "built_date": "2026-09-06",
+  "collector_schema_version": 3,
+  "browser_execution": "Eric Task Master CLI only",
+  "dependencies": {
+    "node": "18+",
+    "python": "3.10+",
+    "xlsx_optional": "openpyxl"
+  },
+  "includes_real_posts": false,
+  "includes_credentials": false,
+  "includes_task_configuration": false,
+  "portable_schema_version": 1,
+  "files": [
+    {
+      "path": "agents/openai.yaml",
+      "bytes": 377,
+      "sha256": "81371cecf5558bd69e7601893d9457a275d9bfadefa09880165475e2a9a65641"
+    },
+    {
+      "path": "assets/review-template.json",
+      "bytes": 708,
+      "sha256": "eb00f7996a252145335ccecad1ea4e76911b5947de50b6d41d418eb2ba170bea"
+    },
+    {
+      "path": "assets/taxonomy-template.json",
+      "bytes": 596,
+      "sha256": "63f9a35ce5553f467279e581cb7c57bbcff07ab26e91eaa191fbc5675397e2f3"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1111,
+      "sha256": "0e17dec274f9689cdb5a14961dcf3a2156be2ff0ee44809fd5c88bc42c897be8"
+    },
+    {
+      "path": "references/evolution.md",
+      "bytes": 10616,
+      "sha256": "3f1af94159715ee0833026dc072618847cc14f89e17d7bcdb91abcbad0d5f851"
+    },
+    {
+      "path": "references/framework.md",
+      "bytes": 4081,
+      "sha256": "005a3cb7a07ce299e3928c6dc03cfb9102cd891f770fb030ba5830fc4df7ad73"
+    },
+    {
+      "path": "references/offline-validation.md",
+      "bytes": 2206,
+      "sha256": "d43b2013e3a70313a0cf28b046ec2e332b099512d91d428ee6b42f1391eec21b"
+    },
+    {
+      "path": "references/pack-contract.md",
+      "bytes": 9380,
+      "sha256": "29663dd64dcc896a988555660bfa8af3f18f9d15bd26ab08e8af20881a25d161"
+    },
+    {
+      "path": "references/portable-deployment.md",
+      "bytes": 5263,
+      "sha256": "a4cc3a6822e43a4d3f79cfabf4203206e992efa2ab945041239d26d2f3265e7b"
+    },
+    {
+      "path": "references/technical-method.md",
+      "bytes": 8249,
+      "sha256": "9065d588d642c2d73ec86f5cb6d96967a7459d3b61cd8f47eccb31bcab9f069a"
+    },
+    {
+      "path": "references/troubleshooting.md",
+      "bytes": 6228,
+      "sha256": "d5986050bb9a6c54a679acf47b056a663fe79d44ce8f7f869cd97be09ace4be3"
+    },
+    {
+      "path": "references/validation-history.md",
+      "bytes": 4174,
+      "sha256": "c5b5dd5891f050ac37755d29861251c287844e9dfe50dfc9b59da9ad12bc667f"
+    },
+    {
+      "path": "references/workflow-and-review.md",
+      "bytes": 7238,
+      "sha256": "a4b8369f151f4e7e7602fecf205da6acf11901dddb04a7d216210409b4c1d03d"
+    },
+    {
+      "path": "scripts/audit_export.py",
+      "bytes": 57939,
+      "sha256": "301bb4dc5cbb48bf92404958af11803b5cbfce14114f10ee2554c79b7fe9f37d"
+    },
+    {
+      "path": "scripts/batches.mjs",
+      "bytes": 23793,
+      "sha256": "94b87c18526223c642f51f82ec12b8e51c8bae2085d6e26b57ea09c26e98e9df"
+    },
+    {
+      "path": "scripts/collect.mjs",
+      "bytes": 42761,
+      "sha256": "f707542ab094ffc754cddeec637c0a088f915102674c58ee070b9a66a3ecd39f"
+    },
+    {
+      "path": "scripts/evolve.py",
+      "bytes": 24724,
+      "sha256": "ec992a6efc59dd48b3788da17f016cb0a5934d8505d181d75f07a5ffbba0d8e6"
+    },
+    {
+      "path": "scripts/portable.py",
+      "bytes": 26782,
+      "sha256": "2dbc779f7df264bf74df34e4866909d4880275b85d0d74a578ad972b1c2eca82"
+    },
+    {
+      "path": "scripts/prepare.mjs",
+      "bytes": 9497,
+      "sha256": "bfe3b70dec73f42467dfc444165487a2249188742e38fe4296a465556146f3cc"
+    },
+    {
+      "path": "skill-release.json",
+      "bytes": 400,
+      "sha256": "2810136ff08320fb096b57094c06975129cc2ce9b51cbbbad4f5683eafa14415"
+    },
+    {
+      "path": "SKILL.md",
+      "bytes": 9204,
+      "sha256": "9b62a702d9fd6aaa9f56bc047c688ded7a963c8a55dcebeee1fe48027c5c685a"
+    },
+    {
+      "path": "tests/test-audit-export.py",
+      "bytes": 35329,
+      "sha256": "b6aecd3a8d89db6b3fd67ba30ad7990a47b627f518b78ddb209b5560da8be935"
+    },
+    {
+      "path": "tests/test-batches.mjs",
+      "bytes": 23283,
+      "sha256": "1293f779821734c17a156cc14e907df365f003557468cd2ebd89130069f61ea5"
+    },
+    {
+      "path": "tests/test-collector.mjs",
+      "bytes": 32900,
+      "sha256": "4372611e5cfa9d4dbef658272568e007635392564b53e39b92a6a041939827b7"
+    },
+    {
+      "path": "tests/test-evolve.py",
+      "bytes": 16991,
+      "sha256": "b8c47cf8dd669f18d4ca726dbbb410b92bffe0367f3472de8ae6bd2de934f5b1"
+    },
+    {
+      "path": "tests/test-portable.py",
+      "bytes": 14884,
+      "sha256": "9b560bd760e7821796b13ba48fb51a839b313c85a00f8059649722eaaf519a06"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 772,
+      "sha256": "1df592fbb6aa24633e266c6be4e4fc9a529a344ab7f4da3dba679d9b91656b4f"
+    }
+  ],
+  "updated_at": "2026-09-06T14:22:09.2061650+00:00"
+}

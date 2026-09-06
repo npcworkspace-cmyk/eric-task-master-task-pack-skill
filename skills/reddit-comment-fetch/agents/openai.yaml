@@ -1,0 +1,6 @@
+interface:
+  display_name: "Reddit 评论获取"
+  short_description: "跨设备 JSON 评论树采集、断点恢复、运行复盘与受控自迭代"
+  default_prompt: "使用 $reddit-comment-fetch，依据当前设备的 Eric Task Master 能力契约运行或适配包内 Pack，获取指定 Reddit 帖子的当前可访问评论，报告覆盖缺口，并完成本次运行复盘与证据驱动的迭代判断。"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,61 @@
+{
+  "name": "reddit-comment-tree-pack",
+  "version": "3.0.0",
+  "entry": "collect.mjs",
+  "purpose": "Reddit JSON comment tree collection with serial morechildren width expansion, parent-focused depth expansion, durable recovery, coverage accounting and post-run review",
+  "required_runtime_capabilities": {
+    "page": ["goto"],
+    "response_body": "Prefer response.text() from page.goto(); otherwise use page.locator('body').innerText as a fallback. If neither exists, preserve one diagnostic batch and stop blocked/runtime_body_capability_missing without retrying it as a network failure.",
+    "input": "JSON object",
+    "outputDir": "writable filesystem path",
+    "signal": "optional AbortSignal",
+    "progress": "optional async callback; failure degrades without stopping collection",
+    "wait": "optional async callback; timed-wait failures fall back to local sleep and are recorded, while human-handoff failures end blocked/runtime_wait_failed"
+  },
+  "runtime_binding": "Capability-based. Inspect and adapt to the Task Master contract installed on the target device; no launcher path, shell or runtime version is embedded.",
+  "registration": "Informational metadata. The target runtime decides whether the entry is run directly, registered or wrapped.",
+  "input": {
+    "posts": "Required 1–1000 HTTPS Reddit post URLs or base36 IDs; normalized and deduplicated. The cap is an implementation memory guard, not a default task scope.",
+    "resumeFrom": "Optional prior output directory; relative paths resolve from the Worker current directory, absolute paths are preferred for predictable local execution",
+    "maxRequests": "Optional integer 1–100000, default 300; per-invocation read budget including failures",
+    "skipUnavailable": "Optional boolean, default false; preserves gaps and never bypasses global 429 handling"
+  },
+  "policy_defaults": {
+    "sort": "confidence",
+    "morechildren_batch_size_max": 100,
+    "serial": true,
+    "scrolling": false,
+    "missing_id_attempts_max": 2,
+    "request_gap_ms": 7000,
+    "rolling_window_ms": 600000,
+    "rolling_window_request_limit": 80,
+    "rate_limit_auto_retries_per_lineage": 1,
+    "default_rate_limit_cooldown_ms": 600000,
+    "note": "Conservative engineering defaults; not a platform authorization, quota or throughput promise."
+  },
+  "method": {
+    "initial": "/comments/{post_id}.json",
+    "width": "/api/morechildren.json with at most 100 observed child IDs",
+    "depth": "/comments/{post_id}.json focused on an observed same-post parent comment",
+    "thread_anchor_origin": "Observed empty recursion marker anchored to a known same-post t1 parent",
+    "thread_successful_reads_max_per_anchor": 1,
+    "thread_gap_resolution": "Exact focal identity plus direct child comments or trackable non-empty child IDs"
+  },
+  "recovery": {
+    "state_schema": 1,
+    "method_revision": "experimental-thread-anchors-v1",
+    "supported_source_revisions": ["legacy-schema1-without-method-revision", "experimental-thread-anchors-v1"],
+    "unknown_revision": "reject before network access",
+    "legacy_shape_rule": "A null or missing method_revision accepts only the old initial/more shape. Focused-thread fields, pending requests or durable batches are rejected before networking or evidence copying.",
+    "compatibility_note": "Matching schema numbers alone do not establish reader compatibility"
+  },
+  "post_run": {
+    "automatic_outputs": ["run-retrospective.json", "run-retrospective.md"],
+    "offline_review": "scripts/review-run.mjs",
+    "source_auto_mutation": false,
+    "promotion": "Agent updates a staged copy and passes regression, cleanliness, portability, independent review and rollback gates"
+  },
+  "outputs": ["checkpoint.json", "batches/*.json", "comments.jsonl", "coverage.json", "result.json", "run-retrospective.json", "run-retrospective.md", "manifest.json"],
+  "completion_statuses": ["exhausted_accessible", "partial", "blocked"],
+  "non_guarantee": "Only currently accessible returned comment objects; never a guarantee of historical or absolute full coverage."
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "project": "eric-task-master-task-pack-skill",
+  "version": "0.1.0",
+  "repository": "https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill",
+  "license": "MIT",
+  "taskmaster": {
+    "repository": "https://github.com/npcworkspace-cmyk/eric-task-master",
+    "bundled": false,
+    "contract": "taskmaster-task-module-v1"
+  },
+  "skills": [
+    {
+      "name": "facebook-group-posts",
+      "path": "skills/facebook-group-posts",
+      "version": "1.2.1",
+      "platform": "facebook",
+      "maturity": "stable",
+      "taskmaster_contract": "taskmaster-task-module-v1",
+      "tests": [
+        {
+          "argv": ["node", "--test", "tests/test-collector.mjs", "tests/test-batches.mjs"],
+          "cwd": "{skill}"
+        },
+        {
+          "argv": ["{python}", "-B", "-X", "utf8", "tests/test-audit-export.py"],
+          "cwd": "{skill}"
+        },
+        {
+          "argv": ["{python}", "-B", "-X", "utf8", "tests/test-evolve.py"],
+          "cwd": "{skill}"
+        },
+        {
+          "argv": ["{python}", "-B", "-X", "utf8", "tests/test-portable.py"],
+          "cwd": "{skill}"
+        }
+      ]
+    },
+    {
+      "name": "reddit-comment-fetch",
+      "path": "skills/reddit-comment-fetch",
+      "version": "3.0.0",
+      "platform": "reddit",
+      "maturity": "portable-offline-validated",
+      "taskmaster_contract": {
+        "binding": "capability-based",
+        "required_capabilities": [
+          "page.goto",
+          "response-body-read",
+          "writable-output-directory"
+        ],
+        "optional_capabilities": [
+          "abort-signal",
+          "progress-callback",
+          "wait-callback"
+        ],
+        "version_pinned": false,
+        "adapter_rule": "Resolve the locally installed Eric Task Master contract at deployment time; do not assume launcher paths, shell commands or product versions."
+      },
+      "tests": [
+        {
+          "argv": ["node", "scripts/validate-release.mjs", "{skill}"],
+          "cwd": "{skill}"
+        }
+      ]
+    }
+  ]
+}

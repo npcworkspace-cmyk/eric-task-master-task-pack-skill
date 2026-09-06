@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "taxonomy_version": null,
+  "purpose": null,
+  "enabled": false,
+  "mode": "agent_classification_with_evidence",
+  "multi_label": true,
+  "categories": [],
+  "fallback_label": "信息不足",
+  "required_output_fields": ["post_id", "labels", "evidence_excerpt", "confidence", "taxonomy_version", "review_status"],
+  "instructions": "只有用户需要业务主题分类时启用。先填写purpose和categories，每类给出id、名称、判据、排除项；用小样本校准后分批归类。保留全部原文与未分类记录，不推断作者敏感属性。"
+}

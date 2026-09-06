@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/reddit-comment-fetch/run-review.schema.json",
+  "title": "Portable Reddit collector run retrospective",
+  "type": "object",
+  "required": ["schemaVersion", "createdAt", "sourcePolicy", "facts", "evidenceFiles", "observations", "integrity", "decision"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "methodRevision": { "type": ["string", "null"] },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "sourcePolicy": {
+      "type": "object",
+      "required": ["reviewMode", "reviewNetworkAccess", "autoMutationAllowed"],
+      "properties": {
+        "reviewMode": { "enum": ["in_run", "offline_audit"] },
+        "reviewNetworkAccess": { "const": false },
+        "autoMutationAllowed": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "facts": {
+      "type": "object",
+      "required": ["status", "reason", "comments", "requests", "posts", "gaps", "diagnostics"],
+      "properties": {
+        "status": { "type": ["string", "null"] },
+        "reason": { "type": ["string", "null"] },
+        "comments": { "type": ["integer", "null"], "minimum": 0 },
+        "requests": { "type": ["integer", "null"], "minimum": 0 },
+        "posts": {
+          "type": "object",
+          "required": ["total", "started", "skipped"],
+          "properties": {
+            "total": { "type": "integer", "minimum": 0 },
+            "started": { "type": "integer", "minimum": 0 },
+            "skipped": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "gaps": {
+          "type": "object",
+          "required": ["queuedIds", "missingIds", "emptyMore", "pendingAnchors", "unresolvedAnchors", "structural"],
+          "properties": {
+            "queuedIds": { "type": "integer", "minimum": 0 },
+            "missingIds": { "type": "integer", "minimum": 0 },
+            "emptyMore": { "type": "integer", "minimum": 0 },
+            "pendingAnchors": { "type": "integer", "minimum": 0 },
+            "unresolvedAnchors": { "type": "integer", "minimum": 0 },
+            "structural": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "stage", "code", "name"],
+            "properties": {
+              "type": { "type": ["string", "null"] },
+              "stage": { "type": ["string", "null"] },
+              "code": { "type": ["string", "null"] },
+              "name": { "type": ["string", "null"] },
+              "count": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "bytes", "sha256"],
+        "properties": {
+          "path": { "enum": ["result.json", "coverage.json", "checkpoint.json", "manifest.json"] },
+          "bytes": { "type": "integer", "minimum": 0 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "severity", "statement", "evidence", "iterationEligibility", "suggestedTarget"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+          "kind": { "enum": ["run_outcome", "integrity", "coverage", "diagnostic"] },
+          "severity": { "enum": ["info", "review", "high"] },
+          "statement": { "type": "string", "minLength": 1 },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["file", "pointer", "sha256"],
+              "properties": {
+                "file": { "enum": ["result.json", "coverage.json", "checkpoint.json", "manifest.json"] },
+                "pointer": { "type": "string", "pattern": "^/" },
+                "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "iterationEligibility": { "enum": ["task_outcome_only", "review_required"] },
+          "suggestedTarget": { "enum": ["no_change", "docs", "executor", "executor_and_docs", "runtime_adapter"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "properties": {
+        "manifest": {
+          "type": "object",
+          "required": ["status", "filesVerified", "trustedForIteration"],
+          "properties": {
+            "status": { "enum": ["missing", "verified"] },
+            "filesVerified": { "type": "integer", "minimum": 0 },
+            "trustedForIteration": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "journalLastApplied": { "type": "integer", "minimum": 0 },
+        "nextSequence": { "type": "integer", "minimum": 1 },
+        "pendingWithoutDurableResponse": { "type": "boolean" },
+        "manifestExpectedAfterReview": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "required": ["status", "reason", "proposalRequired"],
+      "properties": {
+        "status": { "enum": ["pending_agent_review", "evidence_untrusted"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "proposalRequired": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "nonGuarantee": { "type": "string" }
+  },
+  "additionalProperties": false
+}

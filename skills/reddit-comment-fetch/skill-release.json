@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "name": "reddit-comment-fetch",
+  "version": "3.0.0",
+  "platform": "reddit",
+  "maturity": "portable-offline-validated",
+  "taskmaster_contract": {
+    "binding": "capability-based",
+    "required_capabilities": [
+      "page.goto",
+      "response-body-read",
+      "writable-output-directory"
+    ],
+    "optional_capabilities": [
+      "abort-signal",
+      "progress-callback",
+      "wait-callback"
+    ],
+    "version_pinned": false,
+    "adapter_rule": "Resolve the locally installed Eric Task Master contract at deployment time; do not assume launcher paths, shell commands or product versions."
+  },
+  "no_task_config": true,
+  "no_credentials": true,
+  "no_real_data": true
+}
