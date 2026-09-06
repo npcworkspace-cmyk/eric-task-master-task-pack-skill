@@ -1,0 +1,4 @@
+interface:
+  display_name: "TikTok 参考研究与种子发现"
+  short_description: "收齐推广条件和参考链接，深剖内容标签与品牌关系后批量建立种子池"
+  default_prompt: "使用 $tiktok-seed-discovery，先收齐推广国家、粉丝范围、3–5 条带类型的参考链接及红人类别风格，深剖参考后批量发现并审核种子，结束时进行复盘。"

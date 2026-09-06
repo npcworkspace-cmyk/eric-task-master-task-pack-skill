@@ -1,0 +1,4 @@
+interface:
+  display_name: "TikTok 种子裂变"
+  short_description: "沿五类入口展开有证据的种子，集中审核与复盘后决定下一轮"
+  default_prompt: "使用 $tiktok-seed-expansion，沿用已有需求和审核种子批量展开一轮，集中审核并保留真实来源路径，复盘后决定继续、补筛或重找种子。"

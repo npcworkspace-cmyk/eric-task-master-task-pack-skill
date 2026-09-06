@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "eric-task-master-task-pack-skill",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill",
   "license": "MIT",
   "taskmaster": {
@@ -63,6 +63,22 @@
           "cwd": "{skill}"
         }
       ]
+    }
+  ],
+  "bundles": [
+    {
+      "name": "tiktok-discovery",
+      "path": "bundles/tiktok-discovery",
+      "version": "2.1.1",
+      "platform": "tiktok",
+      "maturity": "portable-offline-validated",
+      "members": [
+        "tiktok-seed-discovery",
+        "tiktok-seed-expansion",
+        "tiktok-discovery-retrospective"
+      ],
+      "installer": "node install.mjs",
+      "integrity": "native manifest.json"
     }
   ]
 }
