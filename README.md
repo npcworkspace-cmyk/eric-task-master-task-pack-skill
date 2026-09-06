@@ -19,6 +19,7 @@ Our goal is to make large-scale automation practical for individuals: one person
 | Collect Facebook group posts | Group links, a time range, and a collection budget | Posts, source links, field checks, JSON/CSV and optional XLSX, plus coverage gaps | [Facebook group posts](skills/facebook-group-posts/SKILL.md) |
 | Read comments across known Reddit posts | Post links and a reading budget | Comments with reply relationships, saved progress, and a report of missing or inaccessible branches | [Reddit comments](skills/reddit-comment-fetch/SKILL.md) |
 | Find and expand a TikTok creator shortlist | Target countries, follower range, 3–5 labeled references, creator category and style | Reference research, deduplicated candidates, screening evidence, and seeds for another expansion round | [TikTok discovery](bundles/tiktok-discovery/START-HERE.md) |
+| Check a completed Skill or Pack before sharing it | The complete source/bundle, intended behavior, and available test evidence | An evidence-based review, concrete fixes, untested scope, and an optional source snapshot | [Task Pack Audit](skills/task-pack-audit/SKILL.md) |
 
 TikTok comes as three Skills in one ZIP: **research and find seeds → expand from reviewed seeds → review the run and improve the method**. Install them together; you can call each stage separately.
 
@@ -48,9 +49,11 @@ For TikTok, label each reference as **competitor**, **brand partner**, or **styl
 
 ### 2. Set up your browser session
 
-Install [Task Master](https://github.com/npcworkspace-cmyk/eric-task-master#install) and stable Google Chrome. In the Task Master Dashboard, choose a browser **Profile**—a separate saved browser session—and sign in where needed. Close its manual browser window before the automated task starts.
+For browser workflows, install [Task Master](https://github.com/npcworkspace-cmyk/eric-task-master#install) and stable Google Chrome. In the Task Master Dashboard, choose a browser **Profile**—a separate saved browser session—and sign in where needed. Close its manual browser window before the automated task starts.
 
 Task Master runs locally. Your agent needs access to that computer's files and terminal. Codex has a default Skill installation path; other agents can use their own Skill directory or read the installed `SKILL.md` directly. See the [installation commands and agent handoff](docs/agent-quickstart.md).
+
+Task Pack Audit works on local files and does not need Task Master, Chrome, or a social account. Its optional snapshot tool needs Python 3.11+.
 
 ### 3. Check a small result, then expand
 
@@ -87,6 +90,8 @@ As more people contribute, the library can cover more kinds of work. A fix disco
 The included Skills ask the agent to review successes, failures, wasted work, and missing evidence after a run. Useful improvements can update both instructions and scripts in an isolated candidate, pass validation, and become a new version with a rollback path.
 
 A review can also conclude that no change is needed. A website error or a single unusual account should not silently rewrite everyone's workflow. See [how iteration works](docs/evolution.md).
+
+Before sharing a new or changed Pack, use [Task Pack Audit](skills/task-pack-audit/SKILL.md) to check the actual implementation against the [eight authoring and iteration principles](skills/task-pack-audit/references/principles.md). It distinguishes confirmed issues, reasonable differences, and untested claims. A file snapshot only identifies what was reviewed; it does not judge the result for the agent.
 
 ## What has been tested?
 

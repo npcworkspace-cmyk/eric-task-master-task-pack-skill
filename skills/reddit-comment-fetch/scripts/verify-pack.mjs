@@ -756,13 +756,20 @@ test('OFFLINE PORTABLE: relative output and resume paths work with spaces and Un
     const h = await harness(root, 'unused', () => ({ body: seed([comment('aa')]) }));
     const portable = path.join(root, '资料 space', '运行');
     await mkdir(portable, { recursive: true });
-    const relative = path.relative(process.cwd(), portable);
-    assert.equal(path.isAbsolute(relative), false);
-    h.runtime.outputDir = relative;
-    assert.equal((await h.run()).status, 'exhausted_accessible');
-    assert.deepEqual(ids(await rows(portable)), ['aa']);
-    const normalized = normalizeInput({ posts: [POST], resumeFrom: relative });
-    assert.equal(normalized.resumeFrom, path.resolve(relative));
+    const previousCwd = process.cwd();
+    try {
+      // Keep the relative-path fixture on the current drive, including CI.
+      process.chdir(root);
+      const relative = path.relative(process.cwd(), portable);
+      assert.equal(path.isAbsolute(relative), false);
+      h.runtime.outputDir = relative;
+      assert.equal((await h.run()).status, 'exhausted_accessible');
+      assert.deepEqual(ids(await rows(portable)), ['aa']);
+      const normalized = normalizeInput({ posts: [POST], resumeFrom: relative });
+      assert.equal(normalized.resumeFrom, path.resolve(relative));
+    } finally {
+      process.chdir(previousCwd);
+    }
   });
 });
 

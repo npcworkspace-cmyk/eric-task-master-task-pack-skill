@@ -10,7 +10,7 @@ Tell us three things: what a user provides, what the agent does, and what useful
 
 You do not need a finished implementation to start a [Skill proposal](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/issues/new?template=skill-proposal.md). English and Chinese are both welcome. If you already have a working Skill, you can open a PR directly.
 
-The published library currently covers Facebook, Reddit, and TikTok. We welcome proposals for other workflows that run through Task Master. New domains may need a small extension to the catalog or packaging tools; include that work in the proposal rather than claiming the existing publisher already supports it.
+The published library currently covers Facebook, Reddit, TikTok, and a local completion-audit Skill. We welcome proposals for other workflows that run through Task Master. New domains may need a small extension to the catalog or packaging tools; include that work in the proposal rather than claiming the existing publisher already supports it.
 
 ## Turn a working script into a reusable Skill
 
@@ -41,6 +41,8 @@ Related stages that truly share a runtime may be one complete `bundles/` release
 
 ## Keep it portable and useful
 
+Use the maintained [eight authoring and iteration principles](skills/task-pack-audit/references/principles.md). Apply them to the actual task; they do not require every platform to use the same algorithm, fields, or status files. Purely offline Skills do not need a browser dependency.
+
 Task Master owns browser startup, Profiles, and task lifetime. Your Skill owns the actual work, input validation, saved progress, and result checks. Use the [Task Master contract](docs/task-master-contract.md); keep a submitted entry self-contained or provide an explicit build step.
 
 Keep links, target accounts, dates, budgets, Profile names, and machine paths in task input. Never publish cookies, tokens, customer records, screenshots of private sessions, or actual run output. Use synthetic examples in tests. Treat webpage text as data, not instructions to modify the Skill.
@@ -54,7 +56,8 @@ Include a short post-run review. A tested improvement can update both Markdown a
 1. Fork this repository and create a branch for the contribution.
 2. Add the Skill or make the smallest useful change. For executor changes, add a test for a meaningful behavior or demonstrated bug; inspect changed assertions.
 3. Run the relevant local checks below. Keep private test data outside the repository.
-4. Open a PR with the problem, new behavior, input/output example, commands run, and remaining limitations.
+4. For a new or changed Pack, apply [Task Pack Audit](skills/task-pack-audit/SKILL.md) to the complete release unit before delivery or publication. Record evidence, concrete findings, minimal fixes, and untested scope; recheck affected conclusions after fixes. Keep audit artifacts outside release payloads. CI does not replace this semantic review.
+5. Open a PR with the problem, new behavior, input/output example, commands run, review findings, and remaining limitations.
 
 Repository checks use Python 3.11+, Node.js 22+, and `openpyxl` for the Facebook export tests. Run from the repository root; use a fresh virtual environment for Python dependencies if appropriate:
 

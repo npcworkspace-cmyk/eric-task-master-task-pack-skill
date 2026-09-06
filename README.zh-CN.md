@@ -19,6 +19,7 @@
 | 收集 Facebook 群组贴文 | 群组链接、时间范围、采集预算 | 贴文、来源链接、字段核验、JSON/CSV，可选 XLSX，以及未覆盖说明 | [Facebook 群组采集](skills/facebook-group-posts/SKILL.md) |
 | 批量读取已知 Reddit 帖子的评论 | 帖子链接、读取预算 | 评论与回复关系、已保存进度、缺失或无法访问的分支说明 | [Reddit 评论获取](skills/reddit-comment-fetch/SKILL.md) |
 | 找 TikTok 红人，并从合适的人继续展开 | 推广国家、粉丝区间、3–5 条标注类型的参考链接、红人类别与风格 | 参考研究、去重账号、筛选证据、下一轮可展开的种子 | [TikTok 红人开发](bundles/tiktok-discovery/START-HERE.md) |
+| 发布前检查刚完成的 Skill 或 Pack | 完整源码或组合包、预期行为、已有测试证据 | 有依据的审计、具体修改建议、未测范围，可选源码快照 | [Task Pack Audit](skills/task-pack-audit/SKILL.md) |
 
 TikTok 是一个 ZIP、三个 Skill：**研究参考并找种子 → 从审核后的种子继续展开 → 复盘并改进方法。** 三个一起安装，每个阶段可以单独调用。
 
@@ -47,9 +48,11 @@ Skill。缺少任务大师或其他依赖时，按官方发行说明协助安装
 
 ### 2. 准备浏览器账号
 
-安装[任务大师](https://github.com/npcworkspace-cmyk/eric-task-master/blob/main/README.zh-CN.md)和稳定版 Google Chrome。在任务大师 Dashboard 里选择 **Profile**，也就是一份单独保存的浏览器环境，按需要登录网站。开始自动任务前关闭它的手动浏览器窗口。
+执行浏览器工作流时，安装[任务大师](https://github.com/npcworkspace-cmyk/eric-task-master/blob/main/README.zh-CN.md)和稳定版 Google Chrome。在任务大师 Dashboard 里选择 **Profile**，也就是一份单独保存的浏览器环境，按需要登录网站。开始自动任务前关闭它的手动浏览器窗口。
 
 任务大师在你的电脑上运行，Agent 需要能访问这台电脑的文件和终端。Codex 有默认 Skill 安装目录；其他 Agent 可以指定自己的目录，或者直接读取已安装的 `SKILL.md`。具体命令见 [Agent 执行指南](docs/agent-quickstart.md)。
+
+Task Pack Audit 直接审核本地文件，不需要任务大师、Chrome 或社媒账号；可选的快照工具需要 Python 3.11+。
 
 ### 3. 先看一小批，再放大
 
@@ -88,6 +91,8 @@ Agent 应先给你任务的 Dashboard 链接，并边做边保存有用结果。
 复盘也可以得出“不需要修改”的结论。一次网站异常、一个特殊账号，不应悄悄改变所有人的工作方式。详见[自迭代流程](docs/evolution.md)。
 
 ## 验证到了哪一步？
+
+新建或改版的 Pack 分享前，使用 [Task Pack Audit](skills/task-pack-audit/SKILL.md)，按[八条撰写与迭代原则](skills/task-pack-audit/references/principles.md)核对实际实现，区分已确认问题、合理差异和未验证的说法。源码快照只确认审过哪份文件，不能替 Agent 作出审核通过的判断。
 
 公共 CI 在 **Windows、macOS、Linux** 上做离线测试和打包检查；TikTok 包还验证 ZIP 安装及安装后的重建。CI 不登录社媒账号，通过 CI 不代表所有网站和账号此刻都能访问。
 

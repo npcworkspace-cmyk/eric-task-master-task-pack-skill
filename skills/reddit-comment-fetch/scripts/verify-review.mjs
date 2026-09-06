@@ -274,6 +274,16 @@ test('rejects overlapping or pre-existing destinations', async () => withRoot('p
   await assert.rejects(() => buildRunReview(run, existing), /already exists/);
 }));
 
+test('rejects an overlapping review destination through a directory alias', async () => withRoot('review-alias', async root => {
+  const run = path.join(root, 'run');
+  await mkdir(run);
+  await writeFile(path.join(run, 'result.json'), json({ status: 'completed', comments: 0, requests_total: 0 }));
+  const alias = path.join(root, 'run-alias');
+  await symlink(run, alias, process.platform === 'win32' ? 'junction' : 'dir');
+  await assert.rejects(() => buildRunReview(run, path.join(alias, 'review')), /must not overlap/);
+  await assert.rejects(lstat(path.join(run, 'review')), error => error?.code === 'ENOENT');
+}));
+
 test('rejects symlinked evidence', async () => withRoot('symlink', async root => {
   const run = path.join(root, 'run');
   await mkdir(run);

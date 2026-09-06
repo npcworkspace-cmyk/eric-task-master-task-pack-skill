@@ -363,7 +363,9 @@ export async function buildRunReview(runDirectory, newReviewDirectory, options =
   check(typeof runDirectory === 'string' && typeof newReviewDirectory === 'string', 'RUN_OUTPUT_DIR and NEW_REVIEW_DIR are required');
   const source = await realpath(path.resolve(runDirectory));
   check((await lstat(source)).isDirectory(), 'Run source must be a directory');
-  const destination = path.resolve(newReviewDirectory);
+  const requestedDestination = path.resolve(newReviewDirectory);
+  // mkdir below requires an existing parent; compare its physical identity.
+  const destination = path.join(await realpath(path.dirname(requestedDestination)), path.basename(requestedDestination));
   check(source !== destination && !isInside(source, destination) && !isInside(destination, source), 'Run and review directories must not overlap');
   await requireNew(destination);
 

@@ -12,22 +12,23 @@ Use this guide to select, install, and start an existing Skill. Read the chosen 
 | Comments from known Reddit posts | `reddit-comment-fetch` | Post URL(s)/ID(s), request budget, any skip/resume instructions | [Skill](../skills/reddit-comment-fetch/SKILL.md) and [input contract](../skills/reddit-comment-fetch/references/data-contract.md) |
 | New TikTok creator search | Complete TikTok three-Skill bundle | Target countries, follower minimum/maximum, 3–5 references labeled competitor/brand partner/style reference, category and content style | [Start here](../bundles/tiktok-discovery/START-HERE.md), then [runtime contract](../bundles/tiktok-discovery/skills/tiktok-seed-discovery/scripts/runtime/CONTRACT.md) |
 | Expand an existing TikTok seed pool | Same complete bundle | Reviewed seeds with evidence/provenance, the existing brief, round/quantity budget and stopping rules | [Expansion Skill](../bundles/tiktok-discovery/skills/tiktok-seed-expansion/SKILL.md) |
+| Audit a completed Skill or Pack | `task-pack-audit` | Complete release unit, intended behavior, relevant changes and test evidence | [Audit Skill](../skills/task-pack-audit/SKILL.md) and [principles](../skills/task-pack-audit/references/principles.md) |
 
 Preserve inputs, authorization, Profile selection, pauses, and cooldowns already stated in the conversation. Ask for missing information together. If no published Skill fits, describe the gap and offer a [Skill proposal](../CONTRIBUTING.md); do not claim that an unlisted workflow is implemented.
 
 ## 2. Locate the local runtime
 
-You need a local agent with file and terminal access, stable Chrome, and [Eric Task Master](https://github.com/npcworkspace-cmyk/eric-task-master). Use its installed Skill or current CLI help to locate the launcher and confirm the run/follow contract. A normal run starts Manager automatically; no task registration is required.
+For browser collection, you need a local agent with file and terminal access, stable Chrome, and [Eric Task Master](https://github.com/npcworkspace-cmyk/eric-task-master). Use its installed Skill or current CLI help to locate the launcher and confirm the run/follow contract. A normal run starts Manager automatically; no task registration is required. Task Pack Audit reads local files; it does not require Task Master, Chrome, Node, or a social account. Its optional snapshot tool uses Python 3.11+.
 
 If Task Master is missing, follow its [official installation guide](https://github.com/npcworkspace-cmyk/eric-task-master#install) and [latest release](https://github.com/npcworkspace-cmyk/eric-task-master/releases/latest). Select the OS/CPU asset that actually exists and verify its checksum. The Manager bundle includes Node and Playwright; use the bundled Node's actual path if it is not on PATH. Chrome and site login are provided by the local computer.
 
-The repository examples below use **Python 3.11+**, **Node.js 22+**, and Git. Facebook XLSX export additionally uses `openpyxl`; install that dependency when XLSX is needed. The standalone TikTok ZIP's installer uses Node built-ins and does not need this repository or Python. The optional download command below uses GitHub CLI (`gh`).
+Installing through the repository tools needs Git and **Python 3.11+**. **Node.js 22+** is the tested common baseline for the browser collection scripts. Facebook XLSX export additionally uses `openpyxl`; install that dependency when XLSX is needed. The standalone TikTok ZIP's installer uses Node built-ins and does not need this repository or Python. The optional download command below uses GitHub CLI (`gh`).
 
 ## 3. Install only the selected release unit
 
 Keep downloads and installation destinations separate from task input/output. Quote paths for the current shell.
 
-### Facebook or Reddit
+### Facebook, Reddit, or Task Pack Audit
 
 From a local working directory:
 
@@ -37,7 +38,7 @@ cd eric-task-master-task-pack-skill
 python tools/skillkit.py install --skill facebook-group-posts
 ```
 
-For Reddit, use `--skill reddit-comment-fetch` instead. This route installs the checked-out source. For a published release, download that Skill's ZIP from [Releases](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/releases/latest) and use:
+For Reddit, use `--skill reddit-comment-fetch`; for a local audit, use `--skill task-pack-audit`. This route installs the checked-out source. For a published release, download that Skill's ZIP from [Releases](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/releases/latest) and use:
 
 ```text
 python tools/skillkit.py verify --archive "PATH_TO_DOWNLOADED_SKILL.zip"
@@ -52,17 +53,17 @@ An existing installation is preserved unless `--replace` is supplied. For an aut
 
 Use the published ZIP, which contains `install.mjs`, `manifest.json`, and three sibling Skill directories. The source bundle in a Git checkout is not a ready-to-install release and intentionally lacks the generated manifest.
 
-The following commands reproduce the published **repository release v0.2.0 / TikTok bundle v2.1.1**. For a later release, read its `release-index.json` and substitute its actual tag and ZIP name. Run from the repository root after cloning as above:
+The following commands reproduce the published **repository release v0.3.0 / TikTok bundle v2.1.1**. For a later release, read its `release-index.json` and substitute its actual tag and ZIP name. Run from the repository root after cloning as above:
 
 ```text
-gh release download v0.2.0 --repo npcworkspace-cmyk/eric-task-master-task-pack-skill --pattern "tiktok-discovery-three-skills-v2.1.1.zip" --pattern "SHA256SUMS" --pattern "release-index.json" --dir downloads
+gh release download v0.3.0 --repo npcworkspace-cmyk/eric-task-master-task-pack-skill --pattern "tiktok-discovery-three-skills-v2.1.1.zip" --pattern "SHA256SUMS" --pattern "release-index.json" --dir downloads
 python tools/tiktok_bundle.py verify --archive downloads/tiktok-discovery-three-skills-v2.1.1.zip
 python -m zipfile -e downloads/tiktok-discovery-three-skills-v2.1.1.zip downloads/tiktok-v2.1.1
 node downloads/tiktok-v2.1.1/install.mjs --dry-run
 node downloads/tiktok-v2.1.1/install.mjs
 ```
 
-Use a fresh download/extraction directory if these already exist. Without `gh`, download the same files from the [release page](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/releases/tag/v0.2.0). Compare the ZIP hash with `SHA256SUMS` and its `release-index.json` record. The native verifier and installer also check archive/file integrity.
+Use a fresh download/extraction directory if these already exist. Without `gh`, download the same files from the [release page](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/releases/tag/v0.3.0). Compare the ZIP hash with `SHA256SUMS` and its `release-index.json` record. The native verifier and installer also check archive/file integrity.
 
 The native installer defaults to `CODEX_HOME/skills` or `~/.codex/skills`; it does not use `SOCIAL_SKILLS_DIR`. Add `--skills-dir "ACTUAL_AGENT_SKILLS_DIRECTORY"` for another host. It verifies the complete package and backs up changed installed Skills. Do not pass the TikTok bundle to `skillkit.py install`.
 
@@ -71,6 +72,8 @@ After installation, reload Skills using the host agent's mechanism, or explicitl
 ## 4. Prepare the first task from the installed Skill
 
 Use the actual installed root returned by the installer. Save task configuration and results in a separate working directory.
+
+For **Task Pack Audit**, read its installed `SKILL.md`, inspect the complete target and relevant evidence, and write the review outside the target. Use `scripts/snapshot.py` only if a source identity snapshot is useful. Skip all browser startup commands below; a snapshot is not a semantic pass/fail review.
 
 - **Facebook:** read `SKILL.md`, then run `node scripts/prepare.mjs --help` from that Skill's directory. Prepare the task with the user's group/time window and budget. Use the returned config with `node scripts/batches.mjs run --config "ACTUAL_CONFIG_JSON"`; this supervisor submits the browser batches through Task Master.
 - **Reddit:** read `SKILL.md`, `references/data-contract.md`, and `references/runtime-adaptation.md`. Copy `assets/reddit-comment-tree-pack/` to the task directory; its browser entry is `collect.mjs`. Fill `input.example.json` with the user's task, then run `node scripts/verify-pack.mjs "ABSOLUTE_COPIED_COLLECT.mjs"` from the installed Skill directory. Submit that copied entry through Task Master.

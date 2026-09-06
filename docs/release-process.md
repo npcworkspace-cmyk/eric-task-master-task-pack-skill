@@ -8,7 +8,9 @@
 4. Install every archive into a fresh Unicode-and-space directory and validate
    the installed copy.
 5. Review `release-index.json`, `SHA256SUMS`, maturity labels, and compatibility
-   evidence.
+   evidence. Apply [Task Pack Audit](../skills/task-pack-audit/SKILL.md) to the
+   changed release units and record the semantic findings and remaining limits
+   in the task or PR. CI is mechanical evidence, not this semantic approval.
 6. Tag the repository as `vX.Y.Z`. The Release workflow reruns strict validation,
    behavior tests, and repository tests on Linux, Windows, and macOS before any
    release is created.
