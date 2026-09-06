@@ -34,7 +34,10 @@ def node(*args: str | Path):
             if log.is_file():
                 diagnostics += "\n" + log.read_text(encoding="utf-8")
         raise skillkit.SkillkitError(diagnostics)
-    return json.loads(result.stdout)
+    try:
+        return json.loads(result.stdout)
+    except ValueError as error:
+        raise skillkit.SkillkitError("Node CLI returned no valid JSON: " + str(args[0]) + "\n" + result.stdout + result.stderr) from error
 
 def scan_source():
     files, issues = skillkit._tree_files(BUNDLE)

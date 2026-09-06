@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, readFile, rm, rename } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, rm, rename, symlink } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join, resolve, sep } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { resolveConfigPath, resolveTaskOutputDir, loadRuntimeConfig, defaultSkillsDir, launcherCandidates } from './runtime/environment.mjs';
 import { VERSION, processConfig, validateReviews, targetCountryStatus, writeJson } from './runtime/process.mjs';
 import { frontierConfig, loadPolicySnapshot } from './runtime/frontier.mjs';
@@ -22,6 +23,17 @@ async function sandbox(t) {
   t.after(async () => { const absolute = resolve(root); assert.ok(absolute.startsWith(resolve(tmpdir()) + sep) && /tk-portable 空格-/.test(absolute)); await rm(absolute, { recursive: true, force: true }); });
   return root;
 }
+
+test('CLI runs through a directory alias but remains inert when imported as a library', async t => {
+  const root = await sandbox(t), real = join(root, 'real'), alias = join(root, 'alias');
+  await mkdir(real);
+  await symlink(real, alias, process.platform === 'win32' ? 'junction' : 'dir');
+  const moduleUrl = new URL('./runtime/environment.mjs', import.meta.url).href;
+  const source = 'import { isMain } from ' + JSON.stringify(moduleUrl) + '; if (isMain(import.meta.url)) process.stdout.write("cli_entered");\n';
+  await writeFile(join(real, 'entry.mjs'), source);
+  assert.equal(execFileSync(process.execPath, [join(alias, 'entry.mjs')], { encoding: 'utf8' }), 'cli_entered');
+  assert.equal(execFileSync(process.execPath, ['--input-type=module', '-e', 'await import(process.argv[1])', pathToFileURL(join(real, 'entry.mjs')).href], { encoding: 'utf8' }), '');
+});
 test('path matrix handles spaces and non-ASCII without assuming a Windows task directory', () => {
   assert.equal(resolveConfigPath('./批次/raw', 'C:\\Agents 空间\\Run', 'win32', 'C:\\Users\\example'), 'C:\\Agents 空间\\Run\\批次\\raw');
   assert.equal(resolveConfigPath('./批次/raw', '/Users/example/Agent Work', 'darwin', '/Users/example'), '/Users/example/Agent Work/批次/raw');

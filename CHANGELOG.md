@@ -12,6 +12,8 @@
   SHA256SUMS; retain explicit limits on live platform/throughput claims.
 - Normalize synthetic portability fixture paths for the repository scanner
   and include the distribution license in the installed bundle.
+- Resolve CLI entry identity through filesystem aliases, fixing silent exits
+  from macOS temporary directory aliases and Windows directory junctions.
 
 ## 0.1.0 - 2026-09-06
 

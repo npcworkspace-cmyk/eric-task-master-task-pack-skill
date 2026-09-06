@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { createHash, randomUUID } from 'node:crypto';
-import { pathToFileURL } from 'node:url';
+import { isMain } from '../../tiktok-seed-discovery/scripts/runtime/environment.mjs';
 
 export const ROUTES = ['hashtag', 'identity_location', 'scenario', 'brand_product', 'profile_recommendation'];
 export const QUERY_KINDS = ['topic', 'scenario', 'brand_product', 'identity_location', 'hashtag'];
@@ -354,6 +354,6 @@ async function main() {
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+if (isMain(import.meta.url)) {
   main().catch(error => { process.stderr.write(`${error.message}\n`); process.exitCode = 1; });
 }

@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './environment.mjs';
 import { createHash } from 'node:crypto';
 import { validatePolicy, resolvePolicyFile } from '../../../tiktok-discovery-retrospective/scripts/retrospect.mjs';
 const norm = value => String(value ?? '').replace(/\s+/g, ' ').trim();
@@ -132,7 +132,7 @@ export async function analyzeReferenceConfig(config) {
   await writeJson(path.join(out, 'reference-seed-material.json'), { briefId: brief.id, reviews: validated.reviews, observedTags: queue.dossiers.flatMap(dossier => dossier.tags.map(tag => ({ referenceId: dossier.referenceId, ...tag }))), confirmedCreatorSeeds: [], status: 'reference_material_requires_discovery_tail_and_profile_qualification' });
   return { reviewStatus, executionReady, references: queue.dossiers.length, proposedQueries: compiled.length, runnableQueries: discoveryInput.actions.length, outDir: out };
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+if (isMain(import.meta.url)) {
   try {
     const args = process.argv.slice(2), index = args.indexOf('--config');
     if (index < 0 || !args[index + 1]) throw Error('Usage: reference-analysis.mjs --config <config.json>');

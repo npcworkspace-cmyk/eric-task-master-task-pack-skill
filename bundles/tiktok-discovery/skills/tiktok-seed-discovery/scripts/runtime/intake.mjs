@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './environment.mjs';
 import { createHash } from 'node:crypto';
 
 export const INTAKE_SCHEMA = 'tiktok-reference-intake-v2';
@@ -71,7 +71,7 @@ export async function prepareIntake(input, outDir) {
   try { await fs.writeFile(path.join(outDir, 'control.json'), JSON.stringify({ status: 'ready', notBefore: result.execution.notBefore }, null, 2) + '\n', { flag: 'wx' }); } catch (error) { if (error.code !== 'EEXIST') throw error; }
   return { ...result, outDir: path.resolve(outDir), referenceInput: path.resolve(outDir, 'reference-input.json'), unresolvedReferences: result.brief.references.filter(ref => ref.platform !== 'tiktok').map(ref => ref.id) };
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+if (isMain(import.meta.url)) {
   try {
     const args = process.argv.slice(2), value = name => args[args.indexOf(name) + 1];
     if (!args.includes('--input') || !args.includes('--out')) throw Error('Usage: intake.mjs --input <customer-brief.json> --out <job-directory>');

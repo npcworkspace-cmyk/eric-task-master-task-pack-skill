@@ -11,6 +11,8 @@
 
 Windows、macOS、Linux 使用相同 Node 程序。默认宿主安装路径由 CODEX_HOME/skills 或当前用户主目录 .codex/skills 解析；其他 Agent 用其支持的目录作为 install.mjs 的 --skills-dir。安装后按宿主规则重新加载。不要将别人的整个 .codex 或浏览器用户数据目录当作 Skill 包复制。
 
+CLI 入口按文件的真实路径判断启动方式，支持符号链接、目录连接及系统临时目录别名；作为库导入时不自动执行 CLI。
+
 首次运行从种子 Skill 目录执行：
 
 ```text

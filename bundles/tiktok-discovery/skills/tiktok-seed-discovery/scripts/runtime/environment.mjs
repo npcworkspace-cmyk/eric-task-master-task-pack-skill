@@ -1,11 +1,11 @@
 // Local-only portability contract. This module never starts a browser or Manager.
 import { access, stat, readFile } from 'node:fs/promises';
-import { constants } from 'node:fs';
+import { constants, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { homedir } from 'node:os';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 
-export const ENVIRONMENT_VERSION = 'tiktok-portable-environment-2.0.0';
+export const ENVIRONMENT_VERSION = 'tiktok-portable-environment-2.1.1';
 export const pathApi = platform => platform === 'win32' ? path.win32 : path.posix;
 export function resolveConfigPath(value, baseDir = process.cwd(), platform = process.platform, userHome = homedir()) {
   if (typeof value !== 'string' || !value.trim()) throw Error('A nonempty local path is required');
@@ -38,7 +38,12 @@ export function resolveTaskOutputDir(config, taskId) {
   if (config.taskRoot) return path.join(resolveConfigPath(config.taskRoot, config.configBaseDir), taskId, 'output');
   throw Error(`TASK_OUTPUT_DIRECTORY_REQUIRED: supply taskOutputs[${JSON.stringify(taskId)}] from the actual Task Master outputDir, or an explicit offline taskRoot; installation paths are never guessed`);
 }
-export const isMain = url => !!process.argv[1] && url === pathToFileURL(path.resolve(process.argv[1])).href;
+export function isMain(url) {
+  if (!process.argv[1]) return false;
+  // Node resolves the entry module's symlinks; argv can retain a directory alias.
+  try { return realpathSync(fileURLToPath(url)) === realpathSync(path.resolve(process.argv[1])); }
+  catch { return false; }
+}
 export function defaultSkillsDir(env = process.env, userHome = homedir(), platform = process.platform) {
   const p = pathApi(platform);
   return p.join(env.CODEX_HOME || p.join(userHome, '.codex'), 'skills');
