@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "name": "youtube-creator-discovery",
+  "version": "0.1.5",
+  "platform": "youtube",
+  "maturity": "portable-offline-validated",
+  "taskmaster_contract": "taskmaster-task-module-v1",
+  "required_capabilities": [
+    "page",
+    "input",
+    "outputDir",
+    "progress",
+    "wait",
+    "signal"
+  ],
+  "optional_capabilities": [],
+  "executor_included": true,
+  "no_task_config": true,
+  "no_credentials": true,
+  "no_real_data": true,
+  "runtime": {
+    "offline_node_minimum": "20",
+    "ci_node": "22",
+    "browser_runtime": "Eric Task Master; not bundled"
+  },
+  "components": {
+    "browser": "0.1.3",
+    "processor": "0.1.4"
+  },
+  "validation_scope": {
+    "behavior": "synthetic offline tests and isolated archive installation",
+    "historical_live_youtube": "prior local runs; task data excluded from release",
+    "live_youtube": "no new live collection for this distribution revision",
+    "platform_availability": "calibrate within each authorized task"
+  }
+}

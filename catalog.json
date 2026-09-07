@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "eric-task-master-task-pack-skill",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "repository": "https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill",
   "license": "MIT",
   "taskmaster": {
@@ -79,6 +79,24 @@
       "tests": [
         {
           "argv": ["node", "--test", "scripts/collect.test.mjs", "scripts/ig-audit.test.mjs", "scripts/parity.test.mjs"],
+          "cwd": "{skill}"
+        }
+      ]
+    },
+    {
+      "name": "youtube-creator-discovery",
+      "version": "0.1.5",
+      "platform": "youtube",
+      "maturity": "portable-offline-validated",
+      "taskmaster_contract": "taskmaster-task-module-v1",
+      "path": "skills/youtube-creator-discovery",
+      "tests": [
+        {
+          "argv": [
+            "node",
+            "--test",
+            "scripts/behavior.test.mjs"
+          ],
           "cwd": "{skill}"
         }
       ]
