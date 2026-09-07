@@ -1,0 +1,6 @@
+interface:
+  display_name: "YouTube 红人开发"
+  short_description: "YT 红人批量发现、集中审核、有据裂变与入口收益复盘，附执行 Pack"
+  default_prompt: "使用 $youtube-creator-discovery，根据我的需求和参考研究 YouTube 频道，运行有界发现 Pack，集中审核后展开可靠种子，交付可追溯名单和入口收益。"
+policy:
+  allow_implicit_invocation: true

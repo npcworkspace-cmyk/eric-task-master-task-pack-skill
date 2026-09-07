@@ -10,7 +10,7 @@ Tell us three things: what a user provides, what the agent does, and what useful
 
 You do not need a finished implementation to start a [Skill proposal](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/issues/new?template=skill-proposal.md). English and Chinese are both welcome. If you already have a working Skill, you can open a PR directly.
 
-The published library currently covers Facebook, Reddit, TikTok, Instagram, and a local completion-audit Skill. We welcome proposals for other workflows that run through Task Master. New domains may need a small extension to the catalog or packaging tools; include that work in the proposal rather than claiming the existing publisher already supports it.
+The published library currently covers Facebook, Reddit, TikTok, Instagram, YouTube, and a local completion-audit Skill. We welcome proposals for other workflows that run through Task Master. New domains may need a small extension to the catalog or packaging tools; include that work in the proposal rather than claiming the existing publisher already supports it.
 
 ## Turn a working script into a reusable Skill
 

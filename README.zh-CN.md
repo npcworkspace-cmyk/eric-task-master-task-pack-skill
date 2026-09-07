@@ -20,11 +20,14 @@
 | 批量读取已知 Reddit 帖子的评论 | 帖子链接、读取预算 | 评论与回复关系、已保存进度、缺失或无法访问的分支说明 | [Reddit 评论获取](skills/reddit-comment-fetch/SKILL.md) |
 | 找 TikTok 红人，并从合适的人继续展开 | 推广国家、粉丝区间、3–5 条标注类型的参考链接、红人类别与风格 | 参考研究、去重账号、筛选证据、下一轮可展开的种子 | [TikTok 红人开发](bundles/tiktok-discovery/START-HERE.md) |
 | 找 Instagram 红人，并从已审种子继续展开 | 想得到的结果、账号或作品参考、已有受众条件、发现和审核预算 | 有来源的候选、分开的创作者与中转审核、允许展开范围，以及离线数量/成本对账 | [Instagram 红人开发](skills/instagram-creator-discovery/SKILL.md) |
+| 找 YouTube 红人，包含 Shorts，并集中审核 | 频道或视频参考、主题与形式条件、分开的发现和审核预算 | 稳定频道 ID、来源证据、审核覆盖、作者补查待办和展开种子 | [YouTube 红人开发](skills/youtube-creator-discovery/SKILL.md) |
 | 发布前检查刚完成的 Skill 或 Pack | 完整源码或组合包、预期行为、已有测试证据 | 有依据的审计、具体修改建议、未测范围，可选源码快照 | [Task Pack Audit](skills/task-pack-audit/SKILL.md) |
 
 TikTok 是一个 ZIP、三个 Skill：**研究参考并找种子 → 从审核后的种子继续展开 → 复盘并改进方法。** 三个一起安装，每个阶段可以单独调用。
 
 Instagram 是一个独立 Skill，附 Task Master 采集入口和离线对账工具，覆盖参考研究、批量发现、集中审核和已审种子裂变，不依赖 TikTok 组合包。
+
+YouTube 是独立 Skill，附自包含浏览器入口和离线处理器。发现数、已审、待补证据和未审分别统计；尚未确认作者的 Shorts 保持未解析。
 
 以上是目前已发布的流程。产品调研、供应商开发、媒体监测、网站 QA 等方向都欢迎大家贡献；它们还不是本库已经提供的能力。
 
@@ -104,6 +107,8 @@ Agent 应先给你任务的 Dashboard 链接，并边做边保存有用结果。
 新增 Instagram 模块目前经过离线行为与一致性测试。下一次真实任务先用有界小批校准当前账号的界面；历史工作流观察不能当作新模块的真实平台验证。详见 [Instagram 验证范围](skills/instagram-creator-discovery/references/validation-scope.md)。
 
 发布的 ZIP 带文件完整性记录，每次 Release 提供 `SHA256SUMS` 与 `release-index.json`。[查看 CI](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/actions/workflows/ci.yml)或阅读[发布与核验流程](docs/release-process.md)。
+
+YouTube 包含 14 项合成行为测试及确定性打包、隔离安装检查。历史 Windows 浏览器观察与公共版离线 CI 分开说明，见 [YouTube 验证范围](skills/youtube-creator-discovery/references/validation-scope.md)。
 
 ## License
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.0 - 2026-09-07
+
+- Add independent YouTube creator discovery v0.1.5 with bounded Task Master
+  collection, stable author attribution, Shorts support and evidence replay.
+- Preserve v0.1.4 offline processing: distinct qualified/pending/rejected/
+  unreviewed states, review scope, author-resolution queues and frozen samples.
+- Register 14 synthetic behavior tests and deterministic packaging/isolated
+  Unicode-path installation in the existing three-system CI and release gates.
+- Add distribution metadata, license and validation boundaries; normalize LF
+  without changing browser v0.1.3 or processor v0.1.4 logic. Historical live
+  observations do not certify new live availability or business hit rates.
+- Preserve all existing Skill and bundle payloads.
+
 ## 0.4.0 - 2026-09-07
 
 - Add independently installable Instagram creator discovery v1.0.1: reference
