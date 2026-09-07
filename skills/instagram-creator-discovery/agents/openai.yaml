@@ -1,0 +1,4 @@
+interface:
+  display_name: "Instagram 红人开发"
+  short_description: "研究参考、批量发现与集中审核 Instagram 红人，沿相似和内容关系拓展并逐轮复盘"
+  default_prompt: "使用 $instagram-creator-discovery，根据我的需求和参考账号或 Reels 研究线索、批量发现并集中审核 IG 红人，交付有证据的名单、下一轮种子和入口复盘。"

@@ -19,9 +19,12 @@ Our goal is to make large-scale automation practical for individuals: one person
 | Collect Facebook group posts | Group links, a time range, and a collection budget | Posts, source links, field checks, JSON/CSV and optional XLSX, plus coverage gaps | [Facebook group posts](skills/facebook-group-posts/SKILL.md) |
 | Read comments across known Reddit posts | Post links and a reading budget | Comments with reply relationships, saved progress, and a report of missing or inaccessible branches | [Reddit comments](skills/reddit-comment-fetch/SKILL.md) |
 | Find and expand a TikTok creator shortlist | Target countries, follower range, 3–5 labeled references, creator category and style | Reference research, deduplicated candidates, screening evidence, and seeds for another expansion round | [TikTok discovery](bundles/tiktok-discovery/START-HERE.md) |
+| Find and expand Instagram creators | The desired outcome, account/post references, any audience criteria, and discovery/review budgets | Traceable candidates, separate creator and intermediary reviews, expansion scopes, and an offline count/cost audit | [Instagram discovery](skills/instagram-creator-discovery/SKILL.md) |
 | Check a completed Skill or Pack before sharing it | The complete source/bundle, intended behavior, and available test evidence | An evidence-based review, concrete fixes, untested scope, and an optional source snapshot | [Task Pack Audit](skills/task-pack-audit/SKILL.md) |
 
 TikTok comes as three Skills in one ZIP: **research and find seeds → expand from reviewed seeds → review the run and improve the method**. Install them together; you can call each stage separately.
+
+Instagram is one independent Skill with a Task Master collection entry and an offline audit tool. It covers reference research, batch discovery, review, and expansion from reviewed seeds; it does not require the TikTok bundle.
 
 These are the currently published workflows. Ideas such as product research, supplier discovery, media monitoring, and website QA are welcome contributions, not capabilities already included in this library.
 
@@ -46,6 +49,8 @@ still missing, and the next useful step. Review the run before closing it.
 ```
 
 For TikTok, label each reference as **competitor**, **brand partner**, or **style reference**. Add the target countries, follower range, and the kind of creator/content you want. The agent uses those references to build its search plan.
+
+For Instagram, describe the content or partnership outcome and explain what each reference illustrates. Country and follower thresholds are task-specific criteria, not mandatory defaults. State whether the goal is discovered accounts, reviewed theme seeds, or qualified partners: the collector's discovery quota does not certify the latter two.
 
 ### 2. Set up your browser session
 
@@ -96,6 +101,8 @@ Before sharing a new or changed Pack, use [Task Pack Audit](skills/task-pack-aud
 ## What has been tested?
 
 Public CI runs offline tests and packaging checks on **Windows, macOS, and Linux**. The TikTok bundle also checks ZIP installation and rebuilding from the installed copy. CI does not log into social accounts, and passing it does not prove that every website or account is currently accessible.
+
+The new Instagram modules have offline behavior and consistency tests. The next real task must first calibrate the current account's UI with a bounded batch; historical workflow observations are not live validation of the new modules. See [Instagram validation scope](skills/instagram-creator-discovery/references/validation-scope.md).
 
 Published ZIPs include integrity metadata; each release includes `SHA256SUMS` and `release-index.json`. [View the CI](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/actions/workflows/ci.yml) or read the [release and verification process](docs/release-process.md).
 

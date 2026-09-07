@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "name": "instagram-creator-discovery",
+  "version": "1.0.1",
+  "platform": "instagram",
+  "maturity": "portable-offline-validated",
+  "taskmaster_contract": "taskmaster-task-module-v1",
+  "required_capabilities": [
+    "page",
+    "input",
+    "outputDir",
+    "progress",
+    "wait"
+  ],
+  "optional_capabilities": [
+    "signal"
+  ],
+  "executor_included": true,
+  "no_task_config": true,
+  "no_credentials": true,
+  "no_real_data": true,
+  "runtime": {
+    "offline_node_minimum": "18",
+    "ci_node": "22",
+    "browser_runtime": "Eric Task Master; not bundled"
+  },
+  "validation_scope": {
+    "behavior": "synthetic offline tests",
+    "live_instagram": "not verified for this release",
+    "platform_availability": "calibrate within each authorized task"
+  }
+}

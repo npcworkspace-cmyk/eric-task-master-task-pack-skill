@@ -6,7 +6,7 @@ Eric Task Master is a separate project distributed under its own MIT license;
 its Manager, browser runtime, Chrome profiles, and binaries are not bundled
 here.
 
-Facebook, Reddit, Chrome, Codex, and OpenAI are names or trademarks of their
+Facebook, Reddit, Instagram, Chrome, Codex, and OpenAI are names or trademarks of their
 respective owners. This project is not endorsed by those platforms. Platform
 names are used only to identify interoperability.
 

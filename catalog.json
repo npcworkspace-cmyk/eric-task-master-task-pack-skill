@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "eric-task-master-task-pack-skill",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "repository": "https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill",
   "license": "MIT",
   "taskmaster": {
@@ -67,6 +67,20 @@
         { "argv": ["node", "scripts/verify-review.mjs"], "cwd": "{skill}" },
         { "argv": ["node", "scripts/verify-release.mjs"], "cwd": "{skill}" },
         { "argv": ["node", "scripts/verify-portability.mjs"], "cwd": "{skill}" }
+      ]
+    },
+    {
+      "name": "instagram-creator-discovery",
+      "path": "skills/instagram-creator-discovery",
+      "version": "1.0.1",
+      "platform": "instagram",
+      "maturity": "portable-offline-validated",
+      "taskmaster_contract": "taskmaster-task-module-v1",
+      "tests": [
+        {
+          "argv": ["node", "--test", "scripts/collect.test.mjs", "scripts/ig-audit.test.mjs", "scripts/parity.test.mjs"],
+          "cwd": "{skill}"
+        }
       ]
     },
     {
