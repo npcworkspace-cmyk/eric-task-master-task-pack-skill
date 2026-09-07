@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.0 - 2026-09-07
+
+- Add independently installable Instagram creator discovery v1.0.1: reference
+  research, batch discovery, centralized review, reviewed-seed expansion and
+  per-round retrospective, with a self-contained Task Master collector.
+- Include offline reconciliation for candidate-only targets, frozen baselines,
+  overflow, review evidence priority, scoped intermediaries and separate
+  discovery, enrichment and diagnostic costs.
+- Register the 49 synthetic collector, reconciliation and parity tests in the
+  existing three-system CI and release gates, with deterministic packaging and
+  an isolated Unicode/space-path installation test.
+- Add native release metadata, the distribution license and explicit synthetic
+  fixture annotations; normalize the public payload to LF. Keep historical
+  live collection separate from this module's offline validation scope.
+- Preserve existing Facebook, Reddit, TikTok and audit Skill payloads.
+
 ## 0.3.0 - 2026-09-07
 
 - Add independently installable `task-pack-audit` v1.0.0 with eight concise

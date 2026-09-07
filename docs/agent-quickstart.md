@@ -12,6 +12,7 @@ Use this guide to select, install, and start an existing Skill. Read the chosen 
 | Comments from known Reddit posts | `reddit-comment-fetch` | Post URL(s)/ID(s), request budget, any skip/resume instructions | [Skill](../skills/reddit-comment-fetch/SKILL.md) and [input contract](../skills/reddit-comment-fetch/references/data-contract.md) |
 | New TikTok creator search | Complete TikTok three-Skill bundle | Target countries, follower minimum/maximum, 3–5 references labeled competitor/brand partner/style reference, category and content style | [Start here](../bundles/tiktok-discovery/START-HERE.md), then [runtime contract](../bundles/tiktok-discovery/skills/tiktok-seed-discovery/scripts/runtime/CONTRACT.md) |
 | Expand an existing TikTok seed pool | Same complete bundle | Reviewed seeds with evidence/provenance, the existing brief, round/quantity budget and stopping rules | [Expansion Skill](../bundles/tiktok-discovery/skills/tiktok-seed-expansion/SKILL.md) |
+| Find, review, or expand Instagram creators | `instagram-creator-discovery` | Desired outcome, references or reviewed seeds, existing criteria, separate discovery/review targets and budgets | [Skill](../skills/instagram-creator-discovery/SKILL.md), [runtime contract](../skills/instagram-creator-discovery/references/runtime.md), and [validation scope](../skills/instagram-creator-discovery/references/validation-scope.md) |
 | Audit a completed Skill or Pack | `task-pack-audit` | Complete release unit, intended behavior, relevant changes and test evidence | [Audit Skill](../skills/task-pack-audit/SKILL.md) and [principles](../skills/task-pack-audit/references/principles.md) |
 
 Preserve inputs, authorization, Profile selection, pauses, and cooldowns already stated in the conversation. Ask for missing information together. If no published Skill fits, describe the gap and offer a [Skill proposal](../CONTRIBUTING.md); do not claim that an unlisted workflow is implemented.
@@ -28,7 +29,7 @@ Installing through the repository tools needs Git and **Python 3.11+**. **Node.j
 
 Keep downloads and installation destinations separate from task input/output. Quote paths for the current shell.
 
-### Facebook, Reddit, or Task Pack Audit
+### Facebook, Reddit, Instagram, or Task Pack Audit
 
 From a local working directory:
 
@@ -38,7 +39,7 @@ cd eric-task-master-task-pack-skill
 python tools/skillkit.py install --skill facebook-group-posts
 ```
 
-For Reddit, use `--skill reddit-comment-fetch`; for a local audit, use `--skill task-pack-audit`. This route installs the checked-out source. For a published release, download that Skill's ZIP from [Releases](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/releases/latest) and use:
+For Reddit, use `--skill reddit-comment-fetch`; for Instagram, use `--skill instagram-creator-discovery`; for a local audit, use `--skill task-pack-audit`. This route installs the checked-out source. For a published release, download that Skill's ZIP from [Releases](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/releases/latest) and use:
 
 ```text
 python tools/skillkit.py verify --archive "PATH_TO_DOWNLOADED_SKILL.zip"
@@ -78,6 +79,7 @@ For **Task Pack Audit**, read its installed `SKILL.md`, inspect the complete tar
 - **Facebook:** read `SKILL.md`, then run `node scripts/prepare.mjs --help` from that Skill's directory. Prepare the task with the user's group/time window and budget. Use the returned config with `node scripts/batches.mjs run --config "ACTUAL_CONFIG_JSON"`; this supervisor submits the browser batches through Task Master.
 - **Reddit:** read `SKILL.md`, `references/data-contract.md`, and `references/runtime-adaptation.md`. Copy `assets/reddit-comment-tree-pack/` to the task directory; its browser entry is `collect.mjs`. Fill `input.example.json` with the user's task, then run `node scripts/verify-pack.mjs "ABSOLUTE_COPIED_COLLECT.mjs"` from the installed Skill directory. Submit that copied entry through Task Master.
 - **TikTok:** from the installed `tiktok-seed-discovery` directory, run `node scripts/doctor.mjs`. Follow `scripts/runtime/CONTRACT.md`: `intake.mjs` prepares the task; `reference-browser.mjs` collects references through Task Master; `reference-analysis.mjs` prepares material for Agent review; `browser.mjs` runs search/enrichment batches through Task Master. The offline `process.mjs` handles centralized processing. These files are under `scripts/runtime/`. Existing reviewed seeds enter the expansion Skill; do not submit offline processing scripts as browser tasks.
+- **Instagram:** read `SKILL.md` and `references/runtime.md`. Put the brief, frozen baseline, finite actions, budgets, and output paths in the task directory, then submit the self-contained `scripts/collect.mjs` through Task Master. Run `node scripts/ig-audit.mjs --help` locally for offline reconciliation; do not submit the audit tool as a browser task. The new modules have offline validation only, so start the next real task with bounded UI calibration. Use country/follower criteria only when the task calls for them. `targetCount` is the net-new discovery quota; reviewed theme seeds or qualified partners need their own business goal and evidence checks.
 
 Use the installed Task Master launcher. Replace the placeholders with real paths and returned values; the following is the common CLI lifecycle, not a replacement for a Skill's supervisor:
 

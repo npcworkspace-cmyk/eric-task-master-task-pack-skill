@@ -10,7 +10,7 @@ Tell us three things: what a user provides, what the agent does, and what useful
 
 You do not need a finished implementation to start a [Skill proposal](https://github.com/npcworkspace-cmyk/eric-task-master-task-pack-skill/issues/new?template=skill-proposal.md). English and Chinese are both welcome. If you already have a working Skill, you can open a PR directly.
 
-The published library currently covers Facebook, Reddit, TikTok, and a local completion-audit Skill. We welcome proposals for other workflows that run through Task Master. New domains may need a small extension to the catalog or packaging tools; include that work in the proposal rather than claiming the existing publisher already supports it.
+The published library currently covers Facebook, Reddit, TikTok, Instagram, and a local completion-audit Skill. We welcome proposals for other workflows that run through Task Master. New domains may need a small extension to the catalog or packaging tools; include that work in the proposal rather than claiming the existing publisher already supports it.
 
 ## Turn a working script into a reusable Skill
 
@@ -38,6 +38,8 @@ Keep optional folders only when needed. In `SKILL.md`, set frontmatter `name` to
 Use an existing [release metadata file](skills/facebook-group-posts/skill-release.json) for the field structure, replacing its identity and capabilities with your own. The `name`, `version`, `platform`, `maturity`, and `taskmaster_contract` must agree with the catalog. Keep task settings, credentials, and real data out of the release.
 
 Related stages that truly share a runtime may be one complete `bundles/` release unit, as [TikTok](bundles/tiktok-discovery) is. A new bundle needs its own catalog entry and validation/installation/release integration; `tiktok_bundle.py` is specific to TikTok. Publish a complete usable bundle, not standalone members with missing dependencies.
+
+[Instagram](skills/instagram-creator-discovery) is a standalone Skill: its browser entry is self-contained, while its audit tool runs offline. Its parity tests keep duplicated identity, candidate-source, and JSONL commit rules consistent. Changes to those rules should retain the distinction between a discovery quota and a reviewed business goal; do not add fixed country or follower requirements unrelated to the user's task.
 
 ## Keep it portable and useful
 
@@ -72,6 +74,8 @@ python tools/tiktok_bundle.py package --output dist
 ```
 
 Use a fresh output directory for each complete packaging run and pass that same directory to both packaging commands. For a focused single-Skill change, `--skill your-skill-name` can replace `--all` in the single-Skill tools. The current CI still checks the whole catalog.
+
+The Instagram tests run through the same catalog commands and CI matrix. Its new modules have offline validation only; document a bounded calibration on the next authorized real task separately from synthetic tests or historical workflow observations.
 
 Install your archive into a fresh directory and check the installed copy with the rest of the repository unavailable. For example:
 
